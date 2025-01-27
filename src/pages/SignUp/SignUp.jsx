@@ -7,7 +7,7 @@ import axios from 'axios';
 import { imageUpload } from '../../components/api/utils';
 
 const SignUp = () => {
-  const { createUser, updateUserProfile, signInWithGoogle, loading } = useAuth();
+  const { createUser, updateUserProfile, signInWithGoogle, loading, userSetToDb } = useAuth();
   const navigate = useNavigate();
   // form submit handler
   const handleSubmit = async e => {
@@ -17,15 +17,19 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    console.log(image)
-   const photoURL = await imageUpload(image)
+    console.log(image);
+    const photoURL = await imageUpload(image);
 
     try {
       //2. User Registration
+
       const result = await createUser(email, password);
+      if (result?.user) {
+        userSetToDb({ displayName: name, photoURL: photoURL, email: email });
+      }
 
       //3. Save username & profile photo
-      await updateUserProfile(name,photoURL);
+      await updateUserProfile(name, photoURL);
       console.log(result);
       Swal.fire({
         position: "center",
@@ -49,7 +53,11 @@ const SignUp = () => {
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      await signInWithGoogle();
+      const data = await signInWithGoogle();
+      if (data?.user) {
+        userSetToDb({ displayName: data.user?.displayName, photoURL: data.user?.photoURL, email: data.user?.email });
+      }
+      console.log(data);
       Swal.fire({
         position: "center",
         icon: "success",

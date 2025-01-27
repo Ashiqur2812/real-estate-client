@@ -14,7 +14,7 @@ const UpdatePlantForm = () => {
     const reviewerImage = form.image.files[0];
     const image = await imageUpload(reviewerImage);
 
-    const reviewerData = { reviewerName, reviewerImage: image, reviewDescription, propertyTitle };
+    const reviewerData = { reviewerName, reviewerImage: image, reviewDescription, propertyTitle , };
 
     console.table({ reviewerData });
 

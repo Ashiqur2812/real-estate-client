@@ -7,7 +7,7 @@ import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-  const { signIn, signInWithGoogle, loading, user } = useAuth();
+  const { signIn, signInWithGoogle, loading, user, userSetToDb } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || '/';
@@ -45,7 +45,10 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      await signInWithGoogle();
+      const data = await signInWithGoogle();
+      if (data?.user) {
+        userSetToDb({ displayName: data.user?.displayName, photoURL: data.user?.photoURL, email: data.user?.email });
+      }
       Swal.fire({
         position: "center",
         icon: "success",

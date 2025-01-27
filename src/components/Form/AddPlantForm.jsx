@@ -80,7 +80,7 @@ const AddPlantForm = ({ handleSubmit, uploadButtonText, setUploadButtonText, loa
                     name="minPrice"
                     id="priceRange"
                     type="text"
-                    placeholder="Price Range (e.g., $100,000)"
+                    placeholder="Price (e.g., $100,000)"
                     required
                   />
                 </div>
@@ -94,7 +94,7 @@ const AddPlantForm = ({ handleSubmit, uploadButtonText, setUploadButtonText, loa
                     name="maxPrice"
                     id="priceRange"
                     type="text"
-                    placeholder="Price Range (e.g., $100,000)"
+                    placeholder="Price (e.g., $100,000)"
                     required
                   />
                 </div>

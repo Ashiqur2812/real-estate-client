@@ -35,6 +35,13 @@ const AuthProvider = ({ children }) => {
       photoURL: photo,
     });
   };
+  const userSetToDb = async (userInfo) => {
+    await axios.post(`${import.meta.env.VITE_API_URL}/users/${userInfo?.email}`, {
+      name: userInfo?.displayName,
+      image: userInfo?.photoURL,
+      email: userInfo?.email,
+    });
+  };
 
   // onAuthStateChange
   useEffect(() => {
@@ -42,12 +49,6 @@ const AuthProvider = ({ children }) => {
       console.log('CurrentUser-->', currentUser?.email);
       if (currentUser?.email) {
         setUser(currentUser);
-
-        await axios.post(`${import.meta.env.VITE_API_URL}/users/${currentUser?.email}`, {
-          name: currentUser?.displayName,
-          image: currentUser?.photoURL,
-          email:currentUser?.email,
-        });
 
         // Get JWT token
         await axios.post(
@@ -80,6 +81,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     logOut,
     updateUserProfile,
+    userSetToDb
   };
 
   return (

@@ -16,7 +16,7 @@ const Review = () => {
     const axiosSecure = useAxiosSecure()
     let [isOpen, setIsOpen] = useState(false);
 
-    const { data: reviews = [] } = useQuery({
+    const { data: reviews = [],refetch } = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/reviews`);
@@ -25,6 +25,7 @@ const Review = () => {
         }
     });
     console.log(reviews);
+    refetch()
 
     const closeModal = () => {
         setIsOpen(false);

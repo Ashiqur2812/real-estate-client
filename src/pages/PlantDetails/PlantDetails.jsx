@@ -1,25 +1,29 @@
 import Container from '../../components/Shared/Container';
 import { Helmet } from 'react-helmet-async';
 import Heading from '../../components/Shared/Heading';
-import Button from '../../components/Shared/Button/Button';
-import PurchaseModal from '../../components/Modal/PurchaseModal';
-import { useState } from 'react';
+// import Button from '../../components/Shared/Button/Button';
+// import PurchaseModal from '../../components/Modal/PurchaseModal';
+// import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 import Review from './Review';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
+import useAuth from '../../hooks/useAuth';
 
 const PlantDetails = () => {
+  const { user } = useAuth();
   // let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   console.log(id);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure();
 
   const { data: property = [], isLoading } = useQuery({
     queryKey: ['properties', id],
     queryFn: async () => {
-      const { data } = await axios(`${import.meta.env.VITE_API_URL}/property/${id}`);
+      const { data } = await axiosSecure(`/properties/${id}`);
       console.log(data);
       return data;
     }
@@ -27,15 +31,40 @@ const PlantDetails = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
+  console.log(property)
+
   // const closeModal = () => {
   //   setIsOpen(false);
   // };
 
   const { image, location, maxPrice, minPrice, title, agent } = property || {};
 
-  const handleWishList =  () => {
-    navigate('/dashboard/wish-list')
-  }
+  const wishListData = {
+    image, location, maxPrice, minPrice, title, agent, buyerEmail: user?.email
+  };
+
+  const handleWishList = async () => {
+    try {
+      const { data } = await axiosSecure.post('/add-wishList', wishListData);
+      console.log(data);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Property Added Successfully!!!",
+        showConfirmButton: false,
+        timer: 2000
+      });
+      navigate('/dashboard/wish-list');
+    } catch (error) {
+      console.error('Error adding to wishlist:', error);
+      Swal.fire({
+        title: `${error?.message}`,
+        icon: "error",
+        draggable: true
+      });
+    }
+  };
+
 
   return (
     <>
@@ -81,7 +110,7 @@ const PlantDetails = () => {
                 gap-2
               '
             >
-              <div>Agent: {agent?.name}</div>
+              <div>Agent Name : {agent?.name}</div>
 
               <img
                 className='rounded-full'
@@ -109,7 +138,7 @@ const PlantDetails = () => {
             <div className='flex justify-between'>
               <p className='font-bold text-3xl text-gray-500'>Price: {minPrice}$ - {maxPrice}$</p>
               <div>
-                <button onClick={()=>handleWishList()} className='btn btn-outline text-[#313131]' type='submit'>Add to wishlist</button>
+                <button onClick={handleWishList} className='btn btn-outline text-[#313131]' type='submit'>Add to wishlist</button>
               </div>
               {/* <div>
               <Button onClick={() => setIsOpen(true)} label='Purchase' />

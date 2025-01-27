@@ -118,10 +118,10 @@ const WishList = () => {
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
 
-    const { data: property = [], isLoading, refetch } = useQuery({
-        queryKey: ['property', user?.email],
+    const { data: wishList = [], isLoading, refetch } = useQuery({
+        queryKey: ['wishList', user?.email],
         queryFn: async () => {
-            const { data } = await axiosSecure(`/add-property/${user?.email}`);
+            const { data } = await axiosSecure(`/wish-list/${user?.email}`);
             console.log(data);
             return data;
         }
@@ -132,7 +132,7 @@ const WishList = () => {
     // const closeModal = () => {
     //     setIsOpen(false);
     // };
-    console.log(property);
+    console.log(wishList);
 
     const handleDelete = async (id) => {
         try {
@@ -165,7 +165,7 @@ const WishList = () => {
                     <title>Wish List</title>
                 </Helmet>
                 {
-                    property.map(item => <>
+                    wishList.map(item => <>
                         <div key={item._id} className='mx-auto flex flex-col lg:flex-row items-center justify-between w-full gap-12 my-12'>
 
                             <div className='flex flex-col gap-6 flex-1'>
@@ -194,14 +194,14 @@ const WishList = () => {
 
                                 <div
                                     className=' text-xl  font-semibold  flex  flex-row  items-center gap-2'>
-                                    <div>Agent: {item?.agent?.name}</div>
+                                    <div>Agent: {item.agent?.name}</div>
                                     <img
                                         className='rounded-full'
                                         height='30'
                                         width='30'
                                         alt='Avatar'
                                         referrerPolicy='no-referrer'
-                                        src={item?.agent?.image}
+                                        src={item.agent?.image}
                                     />
                                 </div>
                                 <hr className='my-6' />

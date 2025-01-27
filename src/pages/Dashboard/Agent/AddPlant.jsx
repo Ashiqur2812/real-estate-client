@@ -7,7 +7,6 @@ const AddPlant = () => {
       <Helmet>
         <title>Add Property | Dashboard</title>
       </Helmet>
-
       {/* Form */}
       <AddPlantForm />
     </div>

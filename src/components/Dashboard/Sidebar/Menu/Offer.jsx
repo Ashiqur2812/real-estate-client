@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import useAuth from '../../../../hooks/useAuth';
 import Swal from 'sweetalert2';
@@ -12,20 +12,22 @@ const Offer = () => {
     const [offerAmount, setOfferAmount] = useState("");
     const [startDate, setStartDate] = useState(new Date());
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
     // const [property, setProperty] = useState({});
     const { id } = useParams();
     console.log(id);
     const axiosSecure = useAxiosSecure();
 
-    const { data: property = [], isLoading, refetch } = useQuery({
+    const { data: property = [] } = useQuery({
         queryKey: ['property', id],
         queryFn: async () => {
             const { data } = await axiosSecure(`/property/${id}`);
             console.log(data);
             return data;
         }
+
     });
-    console.log(property);
+    console.log(property)
 
 
     const handleSubmit = async e => {
@@ -41,10 +43,15 @@ const Offer = () => {
 
         const offerDetails = {
             propertyId: property._id,
+            propertyImage:property?.image,
+            location:property?.location,
             buyerEmail: user?.email,
             buyerName: user?.displayName,
+            agent: property?.agent?.name,
             offerAmount,
             buyingDate: startDate,
+            status: 'pending',
+
         };
 
         try {
@@ -57,6 +64,7 @@ const Offer = () => {
                 showConfirmButton: false,
                 timer: 2000
             });
+            navigate(`/dashboard/property-bought`);
         } catch (error) {
             console.log(error);
             Swal.fire({
@@ -76,7 +84,7 @@ const Offer = () => {
                     <input
                         className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
                         // value={property.title}
-                        defaultValue={property.title}
+                        defaultValue={property?.title}
                         name='title'
                         readOnly
                     />
@@ -87,7 +95,7 @@ const Offer = () => {
                     <label className="block text-gray-600">Property Location</label>
                     <input
                         className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
-                        value={property.location}
+                        value={property?.location}
                         name='location'
                         readOnly
                     />
@@ -98,7 +106,7 @@ const Offer = () => {
                     <label className="block text-gray-600">Agent Name</label>
                     <input
                         className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
-                        defaultValue={property.agent?.name}
+                        defaultValue={property?.agent?.name}
                         name='agentName'
                         readOnly
                     />
@@ -124,7 +132,8 @@ const Offer = () => {
                     <label className="block text-gray-600">Buyer Email</label>
                     <input
                         className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
-                        defaultValue={user.email}
+                        defaultValue={property?.
+                            buyerEmail}
                         name='email'
                         readOnly
                     />
@@ -135,7 +144,7 @@ const Offer = () => {
                     <label className="block text-gray-600">Buyer Name</label>
                     <input
                         className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
-                        defaultValue={user.displayName}
+                        defaultValue={user?.displayName}
                         name='name'
                         readOnly
                     />

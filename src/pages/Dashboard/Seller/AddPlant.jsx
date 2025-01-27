@@ -30,7 +30,7 @@ const AddPlant = () => {
       email: user?.email
     };
 
-    const propertyData = { title, location, minPrice, maxPrice, image: imageUrl, agent };
+    const propertyData = { title, location, minPrice, maxPrice, image: imageUrl, agent, status: 'pending' };
 
     console.table({ propertyData });
 

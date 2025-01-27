@@ -66,7 +66,7 @@ const Card = ({ property }) => {
           <img
             src={image}
             alt="Property"
-            className="w-full aspect-square hover:scale-110 transition duration-300 ease-in-out h-60 object-cover"
+            className="w-full aspect-square hover:scale-110 transition duration-300 ease-in-out h-64 object-cover"
           />
         </div>
 
@@ -91,9 +91,9 @@ const Card = ({ property }) => {
           </p>
 
           {/* Verification Status */}
-          <p className="text-sm text-green-600 font-medium mb-4">
+          {/* <p className="text-sm text-green-600 font-medium mb-4">
             Verified
-          </p>
+          </p> */}
           {/* <p className="text-sm text-slate-800 font-medium mb-2">
             Agent Info
           </p> */}

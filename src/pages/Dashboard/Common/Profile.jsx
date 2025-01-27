@@ -1,11 +1,16 @@
-import useAuth from '../../../hooks/useAuth'
-import { Helmet } from 'react-helmet-async'
-import coverImg from '../../../assets/images/banner.png'
+import useAuth from '../../../hooks/useAuth';
+import { Helmet } from 'react-helmet-async';
+import coverImg from '../../../assets/images/banner.png';
+import useRole from '../../../hooks/useRole';
+import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
 
 const Profile = () => {
-  const { user } = useAuth()
+  const { user, loading } = useAuth();
+  // console.log(user)
+  const [role, isLoading] = useRole();
+  console.log(role);
+  if (loading, isLoading) return <LoadingSpinner />;
 
-  console.log(user)
   return (
     <div className='flex justify-center items-center h-screen'>
       <Helmet>
@@ -22,18 +27,18 @@ const Profile = () => {
             <img
               alt='profile'
               src={user.photoURL}
-              className='mx-auto object-cover rounded-full h-24 w-24  border-2 border-white '
+              className='mx-auto object-cover rounded-full h-24 w-24  border-2 border-white'
             />
           </a>
 
           <p className='p-2 px-4 text-xs text-white bg-pink-500 rounded-full'>
-            User
+            {role}
           </p>
           <p className='mt-2 text-xl font-medium text-gray-800 '>
             User Id: {user.uid}
           </p>
           <div className='w-full p-2 mt-4 rounded-lg'>
-            <div className='flex flex-wrap items-center justify-between text-sm text-gray-600 '>
+            <div className='flex flex-wrap items-center justify-around text-sm text-gray-600 '>
               <p className='flex flex-col'>
                 Name
                 <span className='font-bold text-black '>
@@ -45,20 +50,20 @@ const Profile = () => {
                 <span className='font-bold text-black '>{user?.email}</span>
               </p>
 
-              <div>
+              {/* <div>
                 <button className='bg-pink-500 px-10 py-1 rounded-lg text-black cursor-pointer hover:bg-pink-800 block mb-1'>
                   Update Profile
                 </button>
                 <button className='bg-pink-500 px-7 py-1 rounded-lg text-black cursor-pointer hover:bg-pink-800'>
                   Change Password
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;
