@@ -8,7 +8,7 @@ const CheckoutForm = ({ offer }) => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const [error, setError] = useState('');
-    const { clientSecret, setClientSecret } = useState('');
+    const [clientSecret, setClientSecret] = useState('');
     const [transactionID, setTransactionID] = useState('');
     const stripe = useStripe();
     const elements = useElements();
@@ -61,18 +61,21 @@ const CheckoutForm = ({ offer }) => {
             setTransactionID(paymentIntent.id);
 
             const payment = {
-                email: offer?.buyerEmail,
-                price: offer?.offerAmount,
-                offerId:offer?._id,
-                propertyItemId:offer?.propertyId,
+                propertyTitle: offer?.propertyTitle,
+                location: offer?.location,
+                buyerEmail: offer?.buyerEmail,
+                buyerName: offer?.buyerName,
+                soldPrice: offer?.offerAmount,
+                offerId: offer?._id,
+                propertyItemId: offer?.propertyId,
                 transactionID: paymentIntent.id,
                 date: new Date(),
-                status:'bought'
+                status: 'bought'
             };
 
             const res = await axiosSecure.post('/payments', payment);
             console.log('payment saved', res.data);
-            if (res.data?.paymentResult?.insertedId) {
+            if (res.data?.insertedId) {
                 Swal.fire({
                     position: "center",
                     icon: "success",

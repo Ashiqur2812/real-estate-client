@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 import useRole from '../../../../hooks/useRole';
 
 const Offer = () => {
-    const [role] = useRole()
+    const [role] = useRole();
     const { user } = useAuth();
     const [offerAmount, setOfferAmount] = useState("");
     const [startDate, setStartDate] = useState(new Date());
@@ -29,7 +29,7 @@ const Offer = () => {
         }
 
     });
-    console.log(property)
+    console.log(property);
 
 
     const handleSubmit = async e => {
@@ -45,8 +45,9 @@ const Offer = () => {
 
         const offerDetails = {
             propertyId: property._id,
-            propertyImage:property?.image,
-            location:property?.location,
+            propertyTitle: property?.title,
+            propertyImage: property?.image,
+            location: property?.location,
             buyerEmail: user?.email,
             buyerName: user?.displayName,
             agent: property?.agent?.name,
