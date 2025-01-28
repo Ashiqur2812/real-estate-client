@@ -19,7 +19,7 @@ const AllProperty = () => {
         }
     });
 
-    if (isLoading) return <LoadingSpinner />;
+    // if (isLoading) return <LoadingSpinner />;
 
     return (
         <div className='my-12'>

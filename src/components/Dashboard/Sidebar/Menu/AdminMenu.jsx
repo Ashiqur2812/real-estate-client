@@ -28,11 +28,11 @@ const AdminMenu = () => {
         label='Admin Profile'
         address='admin-profile'
       />
-      <MenuItem
+      {/* <MenuItem
         icon={BsGraphUp}
         label='Statistics'
         address='/dashboard'
-      />
+      /> */}
     </>
   );
 };

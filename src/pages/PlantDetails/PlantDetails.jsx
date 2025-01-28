@@ -35,10 +35,6 @@ const PlantDetails = () => {
 
   console.log(property);
 
-  // const closeModal = () => {
-  //   setIsOpen(false);
-  // };
-
   const { image, location, maxPrice, minPrice, title, agent } = property || {};
 
   const wishListData = {
@@ -142,9 +138,6 @@ const PlantDetails = () => {
               <div>
                 <button disabled={role === 'admin' || role === 'agent'} onClick={handleWishList} className='btn btn-outline text-[#313131] ' type='submit'>Add to wishlist</button>
               </div>
-              {/* <div>
-              <Button onClick={() => setIsOpen(true)} label='Purchase' />
-            </div> */}
             </div>
             <hr className='my-6' />
           </div>
@@ -153,10 +146,6 @@ const PlantDetails = () => {
       <div>
         <Review />
       </div>
-      {/* <div className='w-fit flex justify-center mb-9 lg:mx-[43rem]'>
-        <Button onClick={() => setIsOpen(true)} label='Add a review' />
-      </div> */}
-      {/* <PurchaseModal property={property} closeModal={closeModal} isOpen={isOpen} /> */}
     </>
   );
 };

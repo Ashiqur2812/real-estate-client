@@ -46,12 +46,12 @@ const MySoldProperties = () => {
                             {soldProperties.length > 0 ? (
                                 soldProperties.map((property) => (
                                     <tr key={property._id} className="text-center">
-                                        {/* my */}
+                                        {/* <td className="py-3 px-4 border">{property?.propertyTitle} </td> */}
                                         <td className="py-3 px-4 border">{property.location}</td>
                                         <td className="py-3 px-4 border">{property.buyerName}</td>
                                         <td className="py-3 px-4 border">{property.buyerEmail}</td>
                                         <td className="py-3 px-4 border font-semibold text-green-600">${property.
-                                            offerAmount}</td>
+                                            soldPrice}</td>
                                     </tr>
                                 ))
                             ) : (
