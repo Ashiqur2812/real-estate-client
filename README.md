@@ -58,13 +58,6 @@ git clone https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-Ash
 npm install
 ```
 
-### Configure Environment Variables
-Create a `.env` file in the root directory and add:
-```
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_STRIPE_PUBLIC_KEY=your_stripe_key
-BACKEND_URL=your_backend_url
-```
 
 ### Run the Application
 ```bash
