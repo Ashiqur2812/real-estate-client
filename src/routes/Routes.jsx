@@ -25,6 +25,12 @@ import AdminRoute from './AdminRoute';
 import UserRoute from './UserRoute';
 import MyAddedProperties from '../pages/Dashboard/Seller/MyAddedProperties';
 import UpdateProperty from '../pages/Dashboard/Seller/UpdateProperty';
+import OfferedProperties from '../pages/Dashboard/Seller/OfferedProperties';
+import ManageProperties from '../pages/Dashboard/Agent/ManageProperties';
+import AdminProfile from '../pages/Dashboard/Admin/AdminProfile';
+import ManageReviews from '../pages/Dashboard/Admin/ManageReviews';
+import Payment from '../components/Dashboard/Sidebar/Menu/Payment';
+import MySoldProperties from '../pages/Dashboard/Agent/MySoldProperties';
 
 export const router = createBrowserRouter([
   {
@@ -75,12 +81,20 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'my-sold-properties',
+        element: (
+          <PrivateRoute>
+            <AgentRoute>
+              <MySoldProperties />
+            </AgentRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: 'wish-list',
         element: (
           <PrivateRoute>
-            <UserRoute>
-              <WishList />
-            </UserRoute>
+            <WishList />
           </PrivateRoute>
         ),
       },
@@ -88,9 +102,7 @@ export const router = createBrowserRouter([
         path: 'my-review',
         element: (
           <PrivateRoute>
-            <UserRoute>
-              <MyReviews />
-            </UserRoute>
+            <MyReviews />
           </PrivateRoute>
         ),
       },
@@ -98,9 +110,7 @@ export const router = createBrowserRouter([
         path: 'offer/:id',
         element: (
           <PrivateRoute>
-            <UserRoute>
-              <Offer />
-            </UserRoute>
+            <Offer />
           </PrivateRoute>
         ),
       },
@@ -108,22 +118,28 @@ export const router = createBrowserRouter([
         path: 'property-bought',
         element: (
           <PrivateRoute>
-            <UserRoute>
-              <PropertyBought />
-            </UserRoute>
+            <PropertyBought />
           </PrivateRoute>
         ),
       },
       {
-        path: 'my-inventory',
+        path: 'payment-section',
         element: (
           <PrivateRoute>
-            <AgentRoute>
-              <MyInventory />
-            </AgentRoute>
+            <Payment />
           </PrivateRoute>
         ),
       },
+      // {
+      //   path: 'my-inventory',
+      //   element: (
+      //     <PrivateRoute>
+      //       <AgentRoute>
+      //         <MyInventory />
+      //       </AgentRoute>
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: 'update-property/:id',
         element: (
@@ -140,6 +156,36 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <AdminRoute>
               <ManageUsers />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'manage-properties',
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageProperties />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'admin-profile',
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <AdminProfile />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'reviews',
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <ManageReviews />
             </AdminRoute>
           </PrivateRoute>
         ),
@@ -164,12 +210,32 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      // {
+      //   path: 'my-orders',
+      //   element: (
+      //     <PrivateRoute>
+      //       <AgentRoute>
+      //         <MyOrders />
+      //       </AgentRoute>
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
-        path: 'my-orders',
+        path: 'my-added-properties',
         element: (
           <PrivateRoute>
             <AgentRoute>
-              <MyOrders />
+              <MyAddedProperties />
+            </AgentRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'offered-properties',
+        element: (
+          <PrivateRoute>
+            <AgentRoute>
+              <OfferedProperties />
             </AgentRoute>
           </PrivateRoute>
         ),
@@ -184,12 +250,16 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: 'manage-orders',
-        element: <AdminRoute>
-          <ManageOrders />
-        </AdminRoute>,
-      },
+      // {
+      //   path: 'manage-orders',
+      //   element: (
+      //     <PrivateRoute>
+      //       <AdminRoute>
+      //         <ManageOrders />
+      //       </AdminRoute>
+      //     </PrivateRoute>
+      //   ),
+      // },
     ],
   },
 ]);

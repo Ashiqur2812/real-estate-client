@@ -1,106 +1,4 @@
-// import { useQuery } from '@tanstack/react-query';
-// import React from 'react';
-// import { Helmet } from 'react-helmet-async';
-// import { useParams } from 'react-router-dom';
-// import LoadingSpinner from '../../../Shared/LoadingSpinner';
-// import useAxiosSecure from '../../../../hooks/useAxiosSecure';
-// import useAuth from '../../../../hooks/useAuth';
-// import Card from '../../../Home/Card';
-
-// const WishList = () => {
-//     const {user} = useAuth()
-//     const axiosSecure = useAxiosSecure();
-//     const { id } = useParams();
-//     console.log(id);
-
-//     const { data: wishListedProperties = [], isLoading, refetch } = useQuery({
-//         queryKey: ['wishList', id],
-//         queryFn: async () => {
-//             const { data } = await axiosSecure.get(`/property/${id}`);
-//             console.log(data);
-//             return data;
-//         }
-//     });
-
-//     if (isLoading) return <LoadingSpinner />;
-//     console.log(wishListedProperties);
-
-//     return (
-//         <div>
-//             <Helmet>
-//                 <title>Wishlist</title>
-//             </Helmet>
-//             <div className="mx-auto my-12 max-w-7xl px-4">
-//                 <h1 className="text-3xl font-bold text-center mb-8">My Wishlist</h1>
-//                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-//                     {wishListedProperties.map((property) => (
-//                         <div
-//                             key={property.id}
-//                             className="border rounded-lg shadow-lg p-4 flex flex-col justify-between"
-//                         >
-//                             {/* Property Image */}
-//                             <img
-//                                 src={property.image}
-//                                 alt={property.title}
-//                                 className="w-full h-48 object-cover rounded-lg mb-4"
-//                             />
-//                             {/* Property Title */}
-//                             <h2 className="text-xl font-bold text-gray-800 mb-2">
-//                                 {property.title}
-//                             </h2>
-//                             {/* Property Location */}
-//                             <p className="text-gray-600 mb-2">Location: {property.location}</p>
-//                             {/* Agent Info */}
-//                             <div className="flex items-center gap-4 mb-4">
-//                                 <img
-//                                     src={property.agent.image}
-//                                     alt={property.agent.name}
-//                                     className="w-10 h-10 rounded-full object-cover"
-//                                 />
-//                                 <div>
-//                                     <p className="text-gray-800 font-medium">{property.agent.name}</p>
-//                                     <p className="text-sm text-gray-500">
-//                                         {property.agent.verified ? 'Verified' : 'Not Verified'}
-//                                     </p>
-//                                 </div>
-//                             </div>
-//                             {/* Price Range */}
-//                             <p className="text-lg font-semibold text-gray-700 mb-4">
-//                                 Price: ${property.minPrice} - ${property.maxPrice}
-//                             </p>
-//                             {/* Buttons */}
-//                             <div className="flex justify-between">
-//                                 <button
-//                                     className="btn btn-primary"
-//                                     onClick={() => handleMakeOffer(property.id)}
-//                                 >
-//                                     Make an Offer
-//                                 </button>
-//                                 <button
-//                                     className="btn btn-outline btn-error"
-//                                     onClick={() => handleRemove(property.id)}
-//                                 >
-//                                     Remove
-//                                 </button>
-//                             </div>
-//                         </div>
-//                         // <Card/>
-//                     ))}
-//                 </div>
-//                 {wishListedProperties.length === 0 && (
-//                     <p className="text-center text-gray-500 mt-8">No properties in your wishlist.</p>
-//                 )}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default WishList;
-
-
-
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import Container from '../../../Shared/Container';
@@ -114,7 +12,6 @@ import Swal from 'sweetalert2';
 
 const WishList = () => {
     const { user } = useAuth();
-    // let [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
 
@@ -142,7 +39,6 @@ const WishList = () => {
                 icon: "success",
                 draggable: true
             });
-            console.log(data);
             refetch()
         } catch (error) {
             console.log(error.message);

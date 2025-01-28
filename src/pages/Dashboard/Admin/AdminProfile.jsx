@@ -1,10 +1,10 @@
 import { Helmet } from 'react-helmet-async';
-import coverImg from '../../../../assets/images/banner.png';
-import useAuth from '../../../../hooks/useAuth';
-import useRole from '../../../../hooks/useRole';
-import LoadingSpinner from '../../../Shared/LoadingSpinner';
+import useAuth from '../../../hooks/useAuth';
+import useRole from '../../../hooks/useRole';
+import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
+import coverImg from '../../../assets/images/banner.png'
 
-const AgentProfile = () => {
+const AdminProfile = () => {
     const { user, loading } = useAuth();
     const [role, isLoading] = useRole();
     if (loading, isLoading) return <LoadingSpinner />;
@@ -56,4 +56,4 @@ const AgentProfile = () => {
     );
 };
 
-export default AgentProfile;
+export default AdminProfile;

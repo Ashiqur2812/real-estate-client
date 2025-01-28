@@ -50,11 +50,10 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-// import image from '../../assets/images/article1.png';
+
 
 const Card = ({ property }) => {
-  const { user } = useAuth();
+
   const { title, location, image, minPrice, maxPrice,_id } = property || {}
 
   return (
@@ -89,21 +88,6 @@ const Card = ({ property }) => {
           <p className="text-sm text-gray-600 mb-2">
             Maximum Price: <span className="font-medium">{maxPrice}</span>
           </p>
-
-          {/* Verification Status */}
-          {/* <p className="text-sm text-green-600 font-medium mb-4">
-            Verified
-          </p> */}
-          {/* <p className="text-sm text-slate-800 font-medium mb-2">
-            Agent Info
-          </p> */}
-          {/* <p className="text-sm text-slate-600 font-medium mb-2">
-            Agent Name: <span className="text-slate-900">{user?.displayName}</span>
-          </p>
-          <p className="text-sm text-slate-600 font-medium mb-2">
-            Agent email: <span className="text-slate-900">{user?.email}</span>
-          </p> */}
-
           {/* Details Button */}
           <div className="text-center my-5">
             <Link

@@ -11,9 +11,11 @@ import Review from './Review';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
+import useRole from '../../hooks/useRole';
 
 const PlantDetails = () => {
   const { user } = useAuth();
+  const [role] = useRole();
   // let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
   console.log(id);
@@ -31,7 +33,7 @@ const PlantDetails = () => {
 
   if (isLoading) return <LoadingSpinner />;
 
-  console.log(property)
+  console.log(property);
 
   // const closeModal = () => {
   //   setIsOpen(false);
@@ -138,7 +140,7 @@ const PlantDetails = () => {
             <div className='flex justify-between'>
               <p className='font-bold text-3xl text-gray-500'>Price: {minPrice}$ - {maxPrice}$</p>
               <div>
-                <button onClick={handleWishList} className='btn btn-outline text-[#313131]' type='submit'>Add to wishlist</button>
+                <button disabled={role === 'admin' || role === 'agent'} onClick={handleWishList} className='btn btn-outline text-[#313131] ' type='submit'>Add to wishlist</button>
               </div>
               {/* <div>
               <Button onClick={() => setIsOpen(true)} label='Purchase' />

@@ -53,7 +53,7 @@ const UpdateProperty = () => {
                 showConfirmButton: false,
                 timer: 2000
             });
-            navigate('/my-added-properties');
+            navigate('/dashboard/my-added-properties');
             return data;
         } catch (error) {
             console.log(error);

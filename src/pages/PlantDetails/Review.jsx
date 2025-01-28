@@ -11,12 +11,14 @@ import Heading from '../../components/Shared/Heading';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import PurchaseModal from '../../components/Modal/PurchaseModal';
 import Button from '../../components/Shared/Button/Button';
+import useRole from '../../hooks/useRole';
 
 const Review = () => {
-    const axiosSecure = useAxiosSecure()
+    const axiosSecure = useAxiosSecure();
     let [isOpen, setIsOpen] = useState(false);
+    const [role] = useRole();
 
-    const { data: reviews = [],refetch } = useQuery({
+    const { data: reviews = [], refetch } = useQuery({
         queryKey: ['reviews'],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/reviews`);
@@ -25,7 +27,7 @@ const Review = () => {
         }
     });
     console.log(reviews);
-    refetch()
+    refetch();
 
     const closeModal = () => {
         setIsOpen(false);
@@ -68,7 +70,7 @@ const Review = () => {
                 ))}
             </Swiper>
             <div className='w-fit flex justify-center mb-9 lg:mx-[38rem]'>
-                <Button onClick={() => setIsOpen(true)} label='Add a review' />
+                <Button disabled={role === 'admin' || role === 'agent'} onClick={() => setIsOpen(true)} label='Add a review' />
             </div>
             <PurchaseModal reviews={reviews} closeModal={closeModal} isOpen={isOpen} />
         </div>

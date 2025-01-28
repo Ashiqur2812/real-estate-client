@@ -6,8 +6,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import useAuth from '../../../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import useRole from '../../../../hooks/useRole';
 
 const Offer = () => {
+    const [role] = useRole()
     const { user } = useAuth();
     const [offerAmount, setOfferAmount] = useState("");
     const [startDate, setStartDate] = useState(new Date());
