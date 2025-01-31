@@ -1,7 +1,6 @@
 import Card from './Card';
 import Container from '../Shared/Container';
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import LoadingSpinner from '../Shared/LoadingSpinner';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
@@ -11,11 +10,11 @@ const Plants = () => {
     queryKey: ['property'],
     queryFn: async () => {
       const { data } = await axiosSecure(`/all-properties`);
-      console.log(data);
+      // console.log(data);
       return data;
     }
   });
-  console.log(properties);
+  // console.log(properties);
   if (isLoading) return <LoadingSpinner />;
 
   return (

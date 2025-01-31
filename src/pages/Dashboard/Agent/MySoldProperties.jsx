@@ -14,12 +14,12 @@ const MySoldProperties = () => {
         queryKey: ['soldProperty'],
         queryFn: async () => {
             const { data } = await axiosSecure(`/properties/sold/${user?.email}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
 
-    console.log(soldProperties);
+    // console.log(soldProperties);
     if (isLoading) return <LoadingSpinner />;
 
     return (

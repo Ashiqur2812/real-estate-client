@@ -45,7 +45,7 @@ const UpdateProperty = () => {
         // await axios.put(`/api/properties/${id}`, formData); // Update property in the database
         try {
             const { data } = await axiosSecure.put(`/update-property/${id}`, propertyData);
-            console.log(data);
+            // console.log(data);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -56,7 +56,7 @@ const UpdateProperty = () => {
             navigate('/dashboard/my-added-properties');
             return data;
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 title: `${error?.message}`,
                 icon: "error",

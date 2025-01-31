@@ -18,7 +18,7 @@ const PlantDetails = () => {
   const [role] = useRole();
   // let [isOpen, setIsOpen] = useState(false);
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
 
@@ -26,14 +26,14 @@ const PlantDetails = () => {
     queryKey: ['properties', id],
     queryFn: async () => {
       const { data } = await axiosSecure(`/properties/${id}`);
-      console.log(data);
+      // console.log(data);
       return data;
     }
   });
 
   if (isLoading) return <LoadingSpinner />;
 
-  console.log(property);
+  // console.log(property);
 
   const { image, location, maxPrice, minPrice, title, agent } = property || {};
 
@@ -44,7 +44,7 @@ const PlantDetails = () => {
   const handleWishList = async () => {
     try {
       const { data } = await axiosSecure.post('/add-wishList', wishListData);
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         position: "center",
         icon: "success",

@@ -17,19 +17,19 @@ const Offer = () => {
     const navigate = useNavigate();
     // const [property, setProperty] = useState({});
     const { id } = useParams();
-    console.log(id);
+    // console.log(id);
     const axiosSecure = useAxiosSecure();
 
     const { data: property = [] } = useQuery({
         queryKey: ['property', id],
         queryFn: async () => {
             const { data } = await axiosSecure(`/property/${id}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
 
     });
-    console.log(property);
+    // console.log(property);
 
 
     const handleSubmit = async e => {
@@ -59,7 +59,7 @@ const Offer = () => {
 
         try {
             const { data } = await axiosSecure.post('/offer', offerDetails);
-            console.log(data);
+            // console.log(data);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -69,7 +69,7 @@ const Offer = () => {
             });
             navigate(`/dashboard/property-bought`);
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 title: `${error?.message}`,
                 icon: "error",

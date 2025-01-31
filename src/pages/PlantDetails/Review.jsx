@@ -22,11 +22,11 @@ const Review = () => {
         queryKey: ['reviews'],
         queryFn: async () => {
             const { data } = await axiosSecure.get(`/reviews`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
-    console.log(reviews);
+    // console.log(reviews);
     refetch();
 
     const closeModal = () => {

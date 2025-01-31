@@ -14,12 +14,12 @@ const MyReviews = () => {
         queryKey: ['myReviews'],
         queryFn: async () => {
             const { data } = await axiosSecure('/reviews');
-            console.log(data);
+            // console.log(data);
             return data;
         },
     });
 
-    console.log(reviews);
+    // console.log(reviews);
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -32,10 +32,10 @@ const MyReviews = () => {
                 icon: "success",
                 draggable: true
             });
-            console.log(data);
+            // console.log(data);
             refetch();
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
             Swal.fire({
                 icon: "error",
                 title: "Something went wrong!",

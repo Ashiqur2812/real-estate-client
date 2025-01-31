@@ -12,18 +12,18 @@ const ManageReviews = () => {
         queryKey: ['reviews'],
         queryFn: async () => {
             const { data } = await axiosSecure('/reviews');
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
 
-    console.log(reviews);
+    // console.log(reviews);
     if (isLoading) return <LoadingSpinner />;
 
     const deleteReview = async (id) => {
         try {
             const res = await axiosSecure.delete(`/review/${id}`);
-            console.log(res.data);
+            // console.log(res.data);
             Swal.fire({
                 title: "Reviews deleted successfully!!!",
                 icon: "success",
@@ -31,7 +31,7 @@ const ManageReviews = () => {
             })
             refetch();
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 icon: "error",
                 title: `${error.message}`,

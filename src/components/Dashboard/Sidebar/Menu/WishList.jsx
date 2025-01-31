@@ -19,7 +19,7 @@ const WishList = () => {
         queryKey: ['wishList', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure(`/wish-list/${user?.email}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
@@ -29,7 +29,7 @@ const WishList = () => {
     // const closeModal = () => {
     //     setIsOpen(false);
     // };
-    console.log(wishList);
+    // console.log(wishList);
 
     const handleDelete = async (id) => {
         try {
@@ -41,7 +41,7 @@ const WishList = () => {
             });
             refetch()
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
             Swal.fire({
                 icon: "error",
                 title: "Something went wrong!",

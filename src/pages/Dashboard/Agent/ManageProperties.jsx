@@ -12,17 +12,17 @@ const ManageProperties = () => {
         queryKey: ['properties'],
         queryFn: async () => {
             const { data } = await axiosSecure('/properties/pending');
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
-    console.log(properties);
+    // console.log(properties);
     if (isLoading) return <LoadingSpinner />;
 
     const verifyProperty = async (id) => {
         try {
             const res = await axiosSecure.patch(`/verify-property/${id}`);
-            console.log(res.data);
+            // console.log(res.data);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -32,7 +32,7 @@ const ManageProperties = () => {
             });
             refetch();
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 title: `${error?.message}`,
                 icon: "error",
@@ -44,7 +44,7 @@ const ManageProperties = () => {
     const rejectProperty = async id => {
         try {
             const response = await axiosSecure.patch(`/reject-property/${id}`);
-            console.log(response.data);
+            // console.log(response.data);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -54,7 +54,7 @@ const ManageProperties = () => {
             });
             refetch();
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 title: `${error?.message}`,
                 icon: "error",

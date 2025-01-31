@@ -7,11 +7,6 @@ const AdminMenu = () => {
   return (
     <>
       <MenuItem icon={FaUserCog} label='Manage Users' address='manage-users' />
-      {/* <MenuItem
-        icon={MdOutlineManageHistory}
-        label='Manage Orders'
-        address='manage-orders'
-      /> */}
      
       <MenuItem
         icon={MdManageHistory}
@@ -28,11 +23,6 @@ const AdminMenu = () => {
         label='Admin Profile'
         address='admin-profile'
       />
-      {/* <MenuItem
-        icon={BsGraphUp}
-        label='Statistics'
-        address='/dashboard'
-      /> */}
     </>
   );
 };

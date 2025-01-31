@@ -16,11 +16,11 @@ const MyAddedProperties = () => {
         enabled: !loading || !!user?.email,
         queryFn: async () => {
             const { data } = await axiosSecure(`/my-properties/${user?.email}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
-    console.log(properties);
+    // console.log(properties);
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -32,10 +32,10 @@ const MyAddedProperties = () => {
                 icon: "success",
                 draggable: true
             });
-            console.log(data);
+            // console.log(data);
             refetch();
         } catch (error) {
-            console.log(error.message);
+            // console.log(error.message);
             Swal.fire({
                 icon: "error",
                 title: `${error.message}`,

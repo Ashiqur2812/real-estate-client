@@ -11,7 +11,7 @@ const ManageUsers = () => {
     queryKey: ['users'],
     queryFn: async () => {
       const { data } = await axiosSecure('/users');
-      console.log(data);
+      // console.log(data);
       return data;
     }
   });
@@ -31,8 +31,7 @@ const ManageUsers = () => {
       });
       refetch();
     } catch (error) {
-      console.log(error);
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         title: `${error?.message}`,
         icon: "error",
@@ -44,7 +43,7 @@ const ManageUsers = () => {
   const makeAgent = async (id) => {
     try {
       const res = await axiosSecure.patch(`/make-agent/${id}`);
-      console.log(res.data);
+      // console.log(res.data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -54,8 +53,7 @@ const ManageUsers = () => {
       });
       refetch();
     } catch (error) {
-      console.log(error);
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         title: `${error?.message}`,
         icon: "error",
@@ -65,9 +63,10 @@ const ManageUsers = () => {
   };
 
   const markAsFraud = async (id) => {
+    // console.log(id)
     try {
       const res = await axiosSecure.patch(`/make-fraud/${id}`);
-      console.log(res.data);
+      // console.log(res.data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -77,8 +76,7 @@ const ManageUsers = () => {
       });
       refetch();
     } catch (error) {
-      console.log(error);
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         title: `${error?.message}`,
         icon: "error",
@@ -90,7 +88,7 @@ const ManageUsers = () => {
   const deleteUser = async (id, email) => {
     try {
       const response = await axiosSecure(`/users/${id}`);
-      console.log(response.data);
+      // console.log(response.data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -100,7 +98,7 @@ const ManageUsers = () => {
       });
       refetch();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         title: `${error?.message}`,
         icon: "error",
@@ -115,33 +113,35 @@ const ManageUsers = () => {
         <title>Manage Users</title>
       </Helmet>
       <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl font-extrabold text-center mb-10 text-gray-800">Manage Users</h1>
-        <div className="overflow-x-auto shadow-lg rounded-lg">
-          <table className="table-auto w-full border-collapse border border-gray-300 bg-white">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center mb-10 text-gray-800 animate__animated animate__fadeInDown">
+          Manage Users
+        </h1>
+        <div className="overflow-x-auto shadow-2xl rounded-xl bg-opacity-80 backdrop-blur-lg">
+          <table className="w-full border-collapse bg-gradient-to-br from-gray-100 to-white shadow-xl rounded-xl animate__animated animate__fadeIn">
             <thead>
-              <tr className="bg-slate-500 text-white">
-                <th className="border border-gray-300 px-6 py-3 text-lg">Name</th>
-                <th className="border border-gray-300 px-6 py-3 text-lg">Email</th>
-                <th className="border border-gray-300 px-6 py-3 text-lg">Actions</th>
+              <tr className="bg-gradient-to-r from-cyan-600 to-teal-700 text-white rounded-t-lg">
+                <th className="px-4 sm:px-6 py-4 text-md sm:text-lg font-semibold tracking-wide text-left">Name</th>
+                <th className="px-4 sm:px-6 py-4 text-md sm:text-lg font-semibold tracking-wide text-left">Email</th>
+                <th className="px-4 sm:px-6 py-4 text-md sm:text-lg font-semibold tracking-wide text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user._id} className="text-center hover:bg-gray-100">
-                  <td className="border border-gray-300 px-6 py-4 text-gray-700 font-medium break-words">
-                    {user.name}
-                  </td>
-                  <td className="border border-gray-300 px-6 py-4 text-gray-700 font-medium break-words">
-                    {user.email}
-                  </td>
-                  <td className="border border-gray-300 px-6 py-4">
+              {users.map((user, index) => (
+                <tr
+                  key={user._id}
+                  className={`hover:bg-blue-100 transition-all duration-300 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                    }`}
+                >
+                  <td className="px-4 sm:px-6 py-4 text-gray-700 font-medium break-words">{user.name}</td>
+                  <td className="px-4 sm:px-6 py-4 text-gray-700 font-medium break-words">{user.email}</td>
+                  <td className="px-4 sm:px-6 py-4 flex flex-wrap gap-2 justify-center sm:justify-start">
                     {user.role !== "fraud" && (
-                      <div className="flex flex-wrap justify-center gap-2">
+                      <>
                         <button
                           onClick={() => makeAdmin(user._id)}
-                          className={`px-4 py-2 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 shadow-md ${user.role === "admin"
-                            ? "bg-gray-400 cursor-not-allowed"
-                            : "bg-green-500 hover:bg-green-600"
+                          className={`px-3 sm:px-4 py-2 rounded-lg text-white font-semibold shadow-md transition-transform transform hover:scale-105 ${user.role === "admin"
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "bg-green-500 hover:bg-green-600"
                             }`}
                           disabled={user.role === "admin"}
                         >
@@ -149,32 +149,34 @@ const ManageUsers = () => {
                         </button>
                         <button
                           onClick={() => makeAgent(user._id)}
-                          className={`px-4 py-2 rounded-lg text-white font-semibold transition-transform transform hover:scale-105 shadow-md ${user.role === "agent"
-                            ? "bg-gray-400 cursor-not-allowed"
-                            : "bg-blue-500 hover:bg-blue-600"
+                          className={`px-3 sm:px-4 py-2 rounded-lg text-white font-semibold shadow-md transition-transform transform hover:scale-105 ${user.role === "agent"
+                              ? "bg-gray-400 cursor-not-allowed"
+                              : "bg-blue-500 hover:bg-blue-600"
                             }`}
                           disabled={user.role === "agent"}
                         >
                           Make Agent
                         </button>
-                      </div>
+                      </>
                     )}
-                    {user.role === "agent" && user.role !== "fraud" && (
+                    {user?.role === "agent" && user?.role !== "fraud" && (
                       <button
                         onClick={() => markAsFraud(user._id)}
-                        className="mt-2 px-4 py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 transition-transform transform hover:scale-105 shadow-md"
+                        className="px-3 sm:px-4 py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 shadow-md transition-transform transform hover:scale-105"
                       >
                         Mark as Fraud
                       </button>
                     )}
                     <button
                       onClick={() => deleteUser(user._id, user.email)}
-                      className="mt-2 px-4 py-2 rounded-lg text-white font-semibold bg-red-500 hover:bg-red-600 transition-transform transform hover:scale-105 shadow-md"
+                      className="px-3 sm:px-4 py-2 rounded-lg text-white font-semibold bg-rose-500 hover:bg-rose-600 shadow-md transition-transform transform hover:scale-105"
                     >
                       Delete User
                     </button>
                     {user.role === "fraud" && (
-                      <p className="mt-2 text-red-600 font-bold">Fraud</p>
+                      <p className="mt-2 text-rose-600 font-bold animate__animated animate__flash">
+                        Fraud
+                      </p>
                     )}
                   </td>
                 </tr>

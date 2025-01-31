@@ -17,7 +17,7 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    console.log(image);
+    // console.log(image);
     const photoURL = await imageUpload(image);
 
     try {
@@ -30,7 +30,7 @@ const SignUp = () => {
 
       //3. Save username & profile photo
       await updateUserProfile(name, photoURL);
-      console.log(result);
+      // console.log(result);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -40,7 +40,7 @@ const SignUp = () => {
       });
       navigate('/');
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: `${err?.message}`,
         icon: "error",
@@ -57,7 +57,7 @@ const SignUp = () => {
       if (data?.user) {
         userSetToDb({ displayName: data.user?.displayName, photoURL: data.user?.photoURL, email: data.user?.email });
       }
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -67,7 +67,7 @@ const SignUp = () => {
       });
       navigate('/');
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: `${err?.message}`,
         icon: "error",

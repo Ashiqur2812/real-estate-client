@@ -20,7 +20,7 @@ const UpdatePlantForm = () => {
 
     try {
       const { data } = await axiosSecure.post('/reviewer', reviewerData);
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -29,7 +29,7 @@ const UpdatePlantForm = () => {
         timer: 2000
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         title: `${error?.message}`,
         icon: "error",

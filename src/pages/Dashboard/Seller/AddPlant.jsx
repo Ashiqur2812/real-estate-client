@@ -36,7 +36,7 @@ const AddPlant = () => {
 
     try {
       const { data } = await axiosSecure.post('/property', propertyData);
-      console.log(data);
+      // console.log(data);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -45,7 +45,7 @@ const AddPlant = () => {
         timer: 2000
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       Swal.fire({
         title: `${error?.message}`,
         icon: "error",

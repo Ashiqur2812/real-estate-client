@@ -12,17 +12,17 @@ const OfferedProperties = () => {
         queryKey: ['offers'],
         queryFn: async () => {
             const { data } = await axiosSecure('/offers');
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
-    console.log(offers);
+    // console.log(offers);
     if (isLoading) return <LoadingSpinner />;
 
     const acceptOffer = async (offerId, propertyId) => {
         try {
             const res = await axiosSecure.patch(`/accept-offer/${offerId}`, { propertyId });
-            console.log(res.data);
+            // console.log(res.data);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -32,7 +32,7 @@ const OfferedProperties = () => {
             });
             refetch();
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 title: `${error?.message}`,
                 icon: "error",
@@ -44,7 +44,7 @@ const OfferedProperties = () => {
     const rejectOffer = async (id) => {
         try {
             const response = await axiosSecure.patch(`/reject-offer/${id}`);
-            console.log(response.data);
+            // console.log(response.data);
             Swal.fire({
                 position: "center",
                 icon: "success",
@@ -54,7 +54,7 @@ const OfferedProperties = () => {
             });
             refetch();
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             Swal.fire({
                 title: `${error?.message}`,
                 icon: "error",

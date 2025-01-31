@@ -18,11 +18,11 @@ const PropertyBought = () => {
         queryKey: ['properties', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure(`/property-order/${user?.email}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
-    console.log(properties);
+    // console.log(properties);
     if (isLoading) return <LoadingSpinner />;
 
 

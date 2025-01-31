@@ -8,13 +8,13 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 const AllProperty = () => {
     const axiosSecure = useAxiosSecure();
     const [search, setSearch] = useState('');
-    const [sort, setSort] = useState('asc'); // Default sorting: Ascending
+    const [sort, setSort] = useState('asc'); 
 
     const { data: properties = [], isLoading, refetch } = useQuery({
         queryKey: ['property', search, sort],
         queryFn: async () => {
             const { data } = await axiosSecure(`/search-sort?search=${search}&sort=${sort}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
