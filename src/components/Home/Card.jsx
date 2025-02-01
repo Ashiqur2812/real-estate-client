@@ -11,7 +11,7 @@ const Card = ({ property }) => {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
       whileHover={{ scale: 1.03 }}
-      className="max-w-xl mx-auto h-[34rem] bg-white bg-opacity-90 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500"
+      className="max-w-xl mx-auto h-[34rem] bg-white bg-opacity-90 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500"
     >
       {/* Image Section */}
       <div className="relative group overflow-hidden">
@@ -39,7 +39,7 @@ const Card = ({ property }) => {
         {/* Details Button */}
         <div className="text-center mt-6">
           <Link to={`/property/${_id}`}>
-            <button class="cursor-pointer font-semibold overflow-hidden relative z-100 border border-green-500 group px-8 py-2">
+            <button class="cursor-pointer font-semibold overflow-hidden relative z-100 border border-green-500 group px-8 py-2 rounded-sm ">
               <span class="relative z-10 text-green-500 group-hover:text-white text-xl duration-500">View Details</span>
               <span class="absolute w-full h-full bg-green-500 -left-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:left-0 duration-500"></span>
               <span class="absolute w-full h-full bg-green-500 -right-32 top-0 -rotate-45 group-hover:rotate-0 group-hover:right-0 duration-500"></span>

@@ -49,15 +49,6 @@ const Profile = () => {
                 Email
                 <span className='font-bold text-black '>{user?.email}</span>
               </p>
-
-              {/* <div>
-                <button className='bg-pink-500 px-10 py-1 rounded-lg text-black cursor-pointer hover:bg-pink-800 block mb-1'>
-                  Update Profile
-                </button>
-                <button className='bg-pink-500 px-7 py-1 rounded-lg text-black cursor-pointer hover:bg-pink-800'>
-                  Change Password
-                </button>
-              </div> */}
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet-async';
+import { motion } from "framer-motion";
 
 const ManageProperties = () => {
     const axiosSecure = useAxiosSecure();
@@ -64,63 +65,144 @@ const ManageProperties = () => {
     };
 
     return (
-        <div>
+        <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-12 px-4 sm:px-6 lg:px-8"
+        >
             <Helmet>
-                <title>Manage Properties</title>
+                <title>🏘️ Property Kingdom</title>
             </Helmet>
-            <div className="container mx-auto my-12">
-                <h1 className="text-3xl text-[#313131] font-bold mb-8">Manage Properties</h1>
-                <div className="overflow-x-auto">
-                    <table className="table-auto w-full border-collapse border border-gray-300">
-                        <thead>
-                            <tr className="bg-gray-100">
-                                <th className="border text-[#313131] border-gray-400 px-4 py-2">Title</th>
-                                <th className="border text-[#313131] border-gray-400 px-4 py-2">Location</th>
-                                <th className="border text-[#313131] border-gray-400 px-4 py-2">Agent Name</th>
-                                <th className="border text-[#313131] border-gray-400 px-4 py-2">Agent Email</th>
-                                <th className="border text-[#313131] border-gray-400 px-4 py-2">Price Range</th>
-                                <th className="border text-[#313131] border-gray-400 px-4 py-2">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {properties.map((property) => (
-                                <tr key={property._id} className="text-center">
-                                    <td className="border text-[#313131] border-gray-400 px-4 py-2">{property.title}</td>
-                                    <td className="border text-[#313131] border-gray-400 px-4 py-2">{property.location}</td>
-                                    <td className="border text-[#313131] border-gray-400 px-4 py-2">{property.agent?.name}</td>
-                                    <td className="border text-[#313131] border-gray-400 px-4 py-2">{property.agent?.email}</td>
-                                    <td className="border text-[#313131] border-gray-400 px-4 py-2">${property.minPrice} - ${property.maxPrice}</td>
-                                    <td className="border text-[#313131] border-gray-400 px-4 py-2">
-                                        {property.status === "pending" && (
-                                            <>
-                                                <button
-                                                    onClick={() => verifyProperty(property._id)}
-                                                    className="btn btn-sm btn-success mr-2"
-                                                >
-                                                    Verify
-                                                </button>
-                                                <button
-                                                    onClick={() => rejectProperty(property._id)}
-                                                    className="btn btn-sm btn-error"
-                                                >
-                                                    Reject
-                                                </button>
-                                            </>
-                                        )}
-                                        {property.status === "verified" && (
-                                            <p className="text-emerald-500 font-bold">Verified</p>
-                                        )}
-                                        {property.status === "rejected" && (
-                                            <p className="text-pink-500 font-bold">Rejected</p>
-                                        )}
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+
+            <div className="max-w-7xl mx-auto">
+                <motion.h1
+                    initial={{ y: -50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.6, type: "spring" }}
+                    className="text-4xl sm:text-6xl font-bold text-center mb-12  bg-clip-text "
+                >
+                    🏡 Property Palace Management
+                </motion.h1>
+
+                <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ staggerChildren: 0.1 }}
+                >
+                    {properties.map((property) => (
+                        <motion.div
+                            key={property._id}
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.4 }}
+                            className="relative bg-white rounded-2xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 border-4 border-teal-100"
+                        >
+                            {/* Status Ribbon */}
+                            {property.status !== "pending" && (
+                                <div className={`absolute -top-4 -right-4 px-6 py-2 rotate-45 shadow-lg ${property.status === "verified"
+                                        ? "bg-emerald-500 text-white"
+                                        : "bg-pink-500 text-white"
+                                    }`}>
+                                    {property.status === "verified" ? "✅ Verified" : "❌ Rejected"}
+                                </div>
+                            )}
+
+                            {/* Property Card Content */}
+                            <div className="space-y-4">
+                                {/* Property Image Placeholder */}
+                                <div className="h-48 bg-teal-100 rounded-xl flex items-center justify-center text-6xl">
+                                    <img className='w-full h-full rounded-xl' src={property?.image}  alt="" />
+                                </div>
+
+                                <h2 className="text-2xl font-bold text-gray-800 mt-4">
+                                    {property.title}
+                                </h2>
+
+                                <div className="space-y-2 text-gray-600">
+                                    <p className="flex items-center gap-2">
+                                        📍 {property.location}
+                                    </p>
+                                    <p className="flex items-center gap-2">
+                                        👤 {property.agent?.name || "No Agent"}
+                                    </p>
+                                    <p className="flex items-center gap-2">
+                                        ✉️ {property.agent?.email || "-"}
+                                    </p>
+                                    <p className="text-xl font-bold text-teal-600">
+                                        💰 ${property.minPrice} - ${property.maxPrice}
+                                    </p>
+                                </div>
+
+                                {/* Action Area */}
+                                <div className="mt-6 space-y-3">
+                                    {property.status === "pending" ? (
+                                        <div className="flex flex-col gap-3">
+                                            <motion.button
+                                                onClick={() => verifyProperty(property._id)}
+                                                className="w-full py-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white rounded-xl shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-all"
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                🎉 Approve Property
+                                            </motion.button>
+                                            <motion.button
+                                                onClick={() => rejectProperty(property._id)}
+                                                className="w-full py-3 bg-gradient-to-r from-pink-400 to-rose-500 text-white rounded-xl shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-all"
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                            >
+                                                🚫 Reject Listing
+                                            </motion.button>
+                                        </div>
+                                    ) : (
+                                        <div className={`text-center py-3 rounded-xl ${property.status === "verified"
+                                                ? "bg-emerald-100 text-emerald-700"
+                                                : "bg-pink-100 text-pink-700"
+                                            }`}>
+                                            <p className="font-bold text-lg">
+                                                {property.status === "verified"
+                                                    ? "✨ Approved & Verified"
+                                                    : "⛔ Listing Rejected"}
+                                            </p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </motion.div>
+                    ))}my
+                </motion.div>
+
+                {/* Floating Decorations */}
+                <div className="hidden lg:block">
+                    <motion.div
+                        className="absolute top-20 left-20 w-16 h-16 bg-teal-200 rounded-full"
+                        animate={{ y: [0, -20, 0] }}
+                        transition={{ duration: 4, repeat: Infinity }}
+                    />
+                    <motion.div
+                        className="absolute top-1/3 right-32 w-24 h-24 bg-blue-200 rounded-lg rotate-45"
+                        animate={{ y: [0, -30, 0] }}
+                        transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
+                    />
                 </div>
             </div>
-        </div>
+
+            {/* Empty State */}
+            {properties.length === 0 && (
+                <motion.div
+                    className="text-center py-12"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                >
+                    <div className="text-8xl mb-4">🏚️</div>
+                    <h2 className="text-2xl font-bold text-gray-700">
+                        No properties in the kingdom yet!
+                    </h2>
+                </motion.div>
+            )}
+        </motion.div>
     );
 };
 

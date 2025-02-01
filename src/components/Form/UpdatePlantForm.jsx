@@ -9,14 +9,15 @@ const UpdatePlantForm = () => {
     e.preventDefault();
     const form = e.target;
     const reviewerName = form.reviewerName.value;
+    const reviewerEmail = form.reviewerEmail.value;
     const reviewDescription = form.reviewDescription.value;
     const propertyTitle = form.propertyTitle.value;
     const reviewerImage = form.image.files[0];
     const image = await imageUpload(reviewerImage);
 
-    const reviewerData = { reviewerName, reviewerImage: image, reviewDescription, propertyTitle , };
+    const reviewerData = { reviewerName, reviewerEmail, reviewerImage: image, reviewDescription, propertyTitle , };
 
-    console.table({ reviewerData });
+    // console.table({ reviewerData });
 
     try {
       const { data } = await axiosSecure.post('/reviewer', reviewerData);
@@ -55,6 +56,20 @@ const UpdatePlantForm = () => {
                 id='reviewerName'
                 type='text'
                 placeholder='Enter Your Name'
+                required
+              />
+            </div>
+            {/* Email */}
+            <div className='space-y-1 text-sm'>
+              <label className='block text-gray-600'>
+                Email
+              </label>
+              <input
+                className='w-full px-4 py-3 text-gray-800 border border-pink-300 focus:outline-pink-500 rounded-md bg-white'
+                name='reviewerEmail'
+                id='reviewerEmail'
+                type='email'
+                placeholder='Enter Your Email'
                 required
               />
             </div>

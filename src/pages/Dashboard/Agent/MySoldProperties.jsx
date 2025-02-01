@@ -1,5 +1,5 @@
 import React from 'react';
-import Container from '../../../components/Shared/Container';
+import { motion } from "framer-motion";
 import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -23,46 +23,86 @@ const MySoldProperties = () => {
     if (isLoading) return <LoadingSpinner />;
 
     return (
-        <div className="my-12">
+        <div className="my-12 px-4">
             <Helmet>
-                <title>Sold Properties</title>
+                <title>💰 Sold Properties </title>
             </Helmet>
-            <Container>
-                <h2 className="text-4xl font-bold text-center mt-10 text-black">My Sold Properties</h2>
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="container mx-auto"
+            >
+                {/* Header Section */}
+                <motion.div
+                    initial={{ y: -50, scale: 0.9 }}
+                    animate={{ y: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 100 }}
+                    className="text-center mb-12"
+                >
+                    <h1 className="text-5xl md:text-6xl font-bold">
+                        🏆 Sold Properties
+                    </h1>
+                    <p className="text-xl text-gray-600 mt-4 animate-bounce">
+                        Your Real Estate Success Stories! 🌟
+                    </p>
+                </motion.div>
 
-                {/* Table */}
+                {/* Table Section */}
                 <div className="overflow-x-auto mt-8">
-                    <table className="min-w-full bg-white border border-gray-300">
+                    <motion.table
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.7 }}
+                        className="min-w-full bg-gradient-to-r from-indigo-50 to-purple-50 border border-gray-200 shadow-2xl rounded-lg overflow-hidden"
+                    >
                         <thead>
-                            <tr className="bg-gray-200">
-                                {/* <th className="py-3 px-4 border">Property Title</th> */}
-                                <th className="py-3 px-4 border">Location</th>
-                                <th className="py-3 px-4 border">Buyer Name</th>
-                                <th className="py-3 px-4 border">Buyer Email</th>
-                                <th className="py-3 px-4 border">Sold Price</th>
+                            <tr className="bg-cyan-100 text-[#313131]">
+                                <th className="py-4 px-6 text-left text-sm font-bold uppercase">
+                                    📍 Location
+                                </th>
+                                <th className="py-4 px-6 text-left text-sm font-bold uppercase">
+                                    👤 Buyer Name
+                                </th>
+                                <th className="py-4 px-6 text-left text-sm font-bold uppercase">
+                                    📧 Buyer Email
+                                </th>
+                                <th className="py-4 px-6 text-left text-sm font-bold uppercase">
+                                    💸 Sold Price
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {soldProperties.length > 0 ? (
                                 soldProperties.map((property) => (
-                                    <tr key={property._id} className="text-center">
-                                        {/* <td className="py-3 px-4 border">{property?.propertyTitle} </td> */}
-                                        <td className="py-3 px-4 border">{property.location}</td>
-                                        <td className="py-3 px-4 border">{property.buyerName}</td>
-                                        <td className="py-3 px-4 border">{property.buyerEmail}</td>
-                                        <td className="py-3 px-4 border font-semibold text-green-600">${property.
-                                            soldPrice}</td>
-                                    </tr>
+                                    <motion.tr
+                                        key={property._id}
+                                        className="text-left bg-white hover:bg-indigo-50 transition-colors duration-200"
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        <td className="py-4 px-6 border text-gray-800 font-semibold">{property.location}</td>
+                                        <td className="py-4 px-6 border text-gray-900 font-semibold">{property.buyerName}</td>
+                                        <td className="py-4 px-6 border text-gray-900 font-semibold">{property.buyerEmail}</td>
+                                        <td className="py-4 px-6 border text-gray-900 font-bold ">${property.soldPrice}</td>
+                                    </motion.tr>
                                 ))
                             ) : (
-                                <tr>
-                                    <td colSpan="5" className="py-4 text-center text-xl font-bold">No Sold Properties Found</td>
-                                </tr>
+                                <motion.tr
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    <td colSpan="4" className="py-6 text-center text-xl font-bold text-gray-600">
+                                        No Sold Properties Found
+                                    </td>
+                                </motion.tr>
                             )}
                         </tbody>
-                    </table>
+                    </motion.table>
                 </div>
-            </Container>
+            </motion.div>
         </div>
     );
 };

@@ -41,23 +41,6 @@ const PurchaseModal = ({ closeModal, isOpen, reviews }) => {
                   Review Info Before Purchase
                 </DialogTitle>
                 <UpdatePlantForm />
-                {/* <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>Property: {propertyTitle}</p>
-                </div>
-                <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>Location: {reviewDescription}</p>
-                </div>
-                <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>User: {reviewerName}</p>
-                </div> */}
-
-                {/* <div className='mt-2 mb-3'>
-                  <p className='text-sm text-gray-500'>Price: {minPrice}$ - {maxPrice}$</p>
-                </div> */}
-                {/* <div className='mt-2'>
-                  <p className='text-sm text-gray-500'>Available Quantity: 5</p>
-                </div> */}
-                {/* <Button label='Give your opinion' /> */}
               </DialogPanel>
             </TransitionChild>
           </div>

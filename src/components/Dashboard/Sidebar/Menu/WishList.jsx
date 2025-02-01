@@ -39,7 +39,7 @@ const WishList = () => {
                 icon: "success",
                 draggable: true
             });
-            refetch()
+            refetch();
         } catch (error) {
             // console.log(error.message);
             Swal.fire({
@@ -51,98 +51,142 @@ const WishList = () => {
     };
 
     const handleOffer = (id) => {
-        navigate(`/dashboard/offer/${id}`)
-    }
+        navigate(`/dashboard/offer/${id}`);
+    };
 
     return (
         <>
             <Container>
                 <Helmet>
-                    <title>Wish List</title>
+                    <title>🌟 My Dream Collection | Wish List</title>
                 </Helmet>
-                {
-                    wishList.map(item => <>
-                        <div key={item._id} className='mx-auto flex flex-col lg:flex-row items-center justify-between w-full gap-12 my-12'>
+                {wishList.length === 0 ? (
+                    <p className="text-center text-4xl md:text-6xl text-rose-600 animate-bounce mt-40 md:mt-60 font-semibold">No properties found. 🏡</p>
+                ) : <div className="min-h-screen bg-gradient-to-b from-pink-50 to-blue-50 py-12">
+                    {wishList.map((item) => (
+                        <div
+                            key={item._id}
+                            className="mx-auto mb-16 max-w-6xl animate-floatIn transition-all duration-300 hover:scale-[101%]"
+                        >
+                            {/* Property Card */}
+                            <div className="flex flex-col lg:flex-row bg-white rounded-3xl shadow-2xl hover:shadow-3xl overflow-hidden">
+                                {/* Image Section */}
+                                <div className="lg:w-1/2 relative group overflow-hidden">
+                                    <img
+                                        className="w-full h-full object-cover transform group-hover:scale-105 transition-all duration-500"
+                                        src={item?.image}
+                                        alt="property"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                                    <span className="absolute top-4 right-4 px-4 py-2 bg-white/90 rounded-full text-xl font-bold animate-pulse">
+                                        ❤️ Saved
+                                    </span>
+                                </div>
 
-                            <div className='flex flex-col gap-6 flex-1'>
-                                <div>
-                                    <div className='w-full overflow-hidden rounded-xl'>
+                                {/* Details Section */}
+                                <div className="lg:w-1/2 p-8 space-y-6">
+                                    <div className="space-y-4">
+                                        <h2 className="text-4xl font-bold bg-gradient-to-r from-cyan-600 to-pink-500 bg-clip-text text-transparent">
+                                            {item?.title}
+                                        </h2>
+                                        <div className="flex items-center space-x-3">
+                                            <span className="text-2xl">📍</span>
+                                            <p className="text-xl font-semibold text-gray-700">{item?.location}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Price & Actions */}
+                                    <div className="bg-gradient-to-r from-green-100 to-blue-100 p-6 rounded-2xl">
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-2xl font-bold text-gray-600">Dream Price</p>
+                                                <p className="text-4xl font-black text-green-600">
+                                                    ${item?.minPrice} - ${item?.maxPrice}
+                                                </p>
+                                            </div>
+                                            <div className="text-4xl">💸</div>
+                                        </div>
+                                    </div>
+
+                                    {/* Agent Card */}
+                                    <div className="flex items-center space-x-4 bg-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow">
                                         <img
-                                            className='object-cover w-full'
-                                            src={item?.image}
-                                            alt='header image'
+                                            className="w-16 h-16 rounded-full border-4 border-purple-200"
+                                            src={item.agent?.image}
+                                            alt="Agent"
                                         />
+                                        <div>
+                                            <h3 className="text-xl font-bold text-gray-800">Agent Name : {item.agent?.name}</h3>
+                                            <p className="text-teal-600 hover:text-lime-500 transition-colors">
+                                                📧 {item.agent?.email}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Action Buttons */}
+                                    <div className="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+                                        <button
+                                            onClick={() => handleDelete(item?._id)}
+                                            className="flex-1 flex items-center justify-center space-x-2 bg-gradient-to-r from-red-400 to-pink-600 text-white px-8 py-4 rounded-xl hover:scale-105 transition-transform hover:shadow-xl hover:shadow-red-200"
+                                        >
+                                            <svg
+                                                className="w-6 h-6"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <path
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    strokeWidth="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                />
+                                            </svg>
+                                            <span>Break My Heart 💔</span>
+                                        </button>
+
+                                        <button
+                                            onClick={() => handleOffer(item._id)}
+                                            className="flex-1 flex items-center justify-center space-x-2 bg-gradient-to-r from-green-400 to-blue-600 text-white px-8 py-4 rounded-xl hover:scale-105 transition-transform hover:shadow-xl hover:shadow-green-200"
+                                        >
+                                            <span className="text-2xl">🤝</span>
+                                            <span>Make It Mine! 💰</span>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <div className='md:gap-10 flex-1'>
 
-                                <Heading
-                                    title={'Fabulous Property'}
-                                    subtitle={`Title: ${item?.title}`}
-                                />
-                                <hr className='my-6' />
-                                <div
-                                    className='text-lg font-medium text-neutral-500'>
-                                    Agent Email : {item?.agent?.email}
-                                </div>
-                                <hr className='my-6' />
-
-                                <div
-                                    className=' text-xl  font-semibold  flex  flex-row  items-center gap-2'>
-                                    <div>Agent: {item.agent?.name}</div>
-                                    <img
-                                        className='rounded-full'
-                                        height='30'
-                                        width='30'
-                                        alt='Avatar'
-                                        referrerPolicy='no-referrer'
-                                        src={item.agent?.image}
-                                    />
-                                </div>
-                                <hr className='my-6' />
-                                <div>
-                                    <p className=' gap-4  font-light text-slate-800 text-xl'>
-                                        Location: {item?.location}
-                                    </p>
-                                </div>
-                                <hr className='my-6' />
-                                <div className='flex justify-between'>
-                                    <p className='font-bold text-3xl text-gray-500'>Price: {item?.minPrice}$ - {item?.maxPrice}$</p>
-                                    <button onClick={() => handleDelete(item?._id)}
-                                        class="flex justify-center items-center gap-2 w-28 h-12 cursor-pointer rounded-md shadow-2xl text-white font-semibold bg-gradient-to-r from-[#fb7185] via-[#e11d48] to-[#be123c] hover:shadow-xl hover:shadow-red-500 hover:scale-105 duration-300 hover:from-[#be123c] hover:to-[#fb7185]"
-                                    >
-                                        <svg viewBox="0 0 15 15" class="w-5 fill-white">
-                                            <svg
-                                                class="w-6 h-6"
-                                                stroke="currentColor"
-                                                stroke-width="1.5"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                            >
-                                                <path
-                                                    d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                                                    stroke-linejoin="round"
-                                                    stroke-linecap="round"
-                                                ></path>
-                                            </svg>
-                                            Button
-                                        </svg>
-                                    </button>
-                                </div>
-                                <hr className='my-6' />
-                            </div>
+                            {/* Decorative Elements */}
+                            {/* <div className="hidden lg:block">
+                                <div className="relative -top-8 -left-8 w-24 h-24 bg-purple-200 rounded-full blur-xl opacity-30 animate-float" />
+                                <div className="relative -top-16 -right-8 w-32 h-32 bg-pink-200 rounded-full blur-xl opacity-30 animate-float-delayed" />
+                            </div> */}
                         </div>
-                        <div className='w-fit flex justify-center mb-9 lg:mx-[25rem]'>
-                            <Button onClick={()=>handleOffer(item._id)} label='Make an Offer' />
-                        </div>  
-                        </>
-                    )
+                    ))}
+                </div>
                 }
             </Container>
-            
-            {/* <PurchaseModal property={property} closeModal={closeModal} isOpen={isOpen} /> */}
+
+            {/* <style jsx global>{`
+    @keyframes floatIn {
+      0% { opacity: 0; transform: translateY(50px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+    .animate-floatIn {
+      animation: floatIn 0.6s ease-out;
+    }
+    .animate-float {
+      animation: float 6s ease-in-out infinite;
+    }
+    .animate-float-delayed {
+      animation: float 6s ease-in-out 2s infinite;
+    }
+  `}</style> */}
         </>
     );
 };

@@ -13,7 +13,7 @@ const AgentProfile = () => {
     return (
         <div className='flex justify-center items-center h-screen'>
             <Helmet>
-                <title>Agent Profile</title>
+                <title>👤 Agent Profile </title>
             </Helmet>
             <div className='bg-white shadow-lg rounded-2xl md:w-4/5 lg:w-3/5'>
                 <img
@@ -39,13 +39,13 @@ const AgentProfile = () => {
                     <div className='w-full p-2 mt-4 rounded-lg'>
                         <div className='flex flex-wrap items-center justify-around text-sm text-gray-600 '>
                             <p className='flex flex-col'>
-                                Name
+                                👤 Name
                                 <span className='font-bold text-black '>
                                     {user?.displayName}
                                 </span>
                             </p>
                             <p className='flex flex-col'>
-                                Email
+                                📧 Email
                                 <span className='font-bold text-black '>{user?.email}</span>
                             </p>
                         </div>

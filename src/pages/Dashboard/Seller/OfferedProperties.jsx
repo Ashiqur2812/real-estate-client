@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../components/Shared/LoadingSpinner';
 import Swal from 'sweetalert2';
+import {motion} from 'framer-motion';
 
 const OfferedProperties = () => {
     const axiosSecure = useAxiosSecure();
@@ -64,97 +65,198 @@ const OfferedProperties = () => {
     };
 
     return (
-        <>
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-12 px-4 md:px-8">
             <Helmet>
-                <title>Offered Properties</title>
+                <title>💰 Offered Properties </title>
             </Helmet>
-            <div className="container mx-auto px-4 sm:px-8">
-                <div className="py-8">
-                    <h1 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-                        Offered Properties
+
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="container mx-auto"
+            >
+                {/* Header Section */}
+                <motion.div
+                    initial={{ y: -50, scale: 0.9 }}
+                    animate={{ y: 0, scale: 1 }}
+                    transition={{ type: "spring", stiffness: 100 }}
+                    className="text-center mb-12"
+                >
+                    <h1 className="text-5xl md:text-6xl font-bold">
+                        🏆 Offered Properties
                     </h1>
-                    <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        <div className="inline-block min-w-full shadow-lg rounded-lg overflow-hidden bg-white">
-                            <table className="min-w-full leading-normal">
-                                <thead>
-                                    <tr className="bg-gray-200">
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700  text-sm uppercase text-center font-semibold">
-                                            Property Image
-                                        </th>
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700 text-center text-sm uppercase font-semibold">
-                                            Location
-                                        </th>
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700 text-center text-sm uppercase font-semibold">
-                                            Buyer Name
-                                        </th>
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700 text-center text-sm uppercase font-semibold">
-                                            Buyer Email
-                                        </th>
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700 text-center text-sm uppercase font-semibold">
-                                            Offered Price
-                                        </th>
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700 text-center text-sm uppercase font-semibold">
-                                            Status
-                                        </th>
-                                        <th className="px-5 py-3 border-b border-gray-300 text-gray-700 text-center text-sm uppercase font-semibold">
-                                            Action
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {offers.map((offer) => (
-                                        <tr key={offer._id} className="hover:bg-gray-100 transition duration-200">
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm">
+                    <p className="text-xl text-gray-600 mt-4 animate-bounce">
+                        Your Real Estate Opportunities Await! 🌟
+                    </p>
+                </motion.div>
+
+                {/* Table Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.7 }}
+                    className="overflow-x-auto"
+                >
+                    <div className="inline-block min-w-full shadow-2xl rounded-lg overflow-hidden bg-white/90  transform transition-transform duration-300 hover:scale-[99%]">
+                        <table className="min-w-full leading-normal">
+                            {/* Table Header */}
+                            <thead>
+                                <tr className="bg-sky-100 text-[#313131]">
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        🖼️ Property Image
+                                    </th>
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        📍 Location
+                                    </th>
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        👤 Buyer Name
+                                    </th>
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        📧 Buyer Email
+                                    </th>
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        💸 Offered Price
+                                    </th>
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        📊 Status
+                                    </th>
+                                    <th className="px-5 py-4 text-center text-sm font-semibold uppercase">
+                                        🛠️ Action
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            {/* Table Body */}
+                            <tbody>
+                                {offers.length > 0 ? (
+                                    offers.map((offer, index) => (
+                                        <motion.tr
+                                            key={offer._id}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                                            className="hover:bg-purple-50 transition-colors duration-200"
+                                        >
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm">
                                                 <div className="flex justify-center">
                                                     <img
-                                                        className="w-12 h-12 rounded-full object-cover border border-gray-300"
+                                                        className="w-12 h-12 rounded-full object-cover border-2 border-purple-200 transform transition-transform duration-300 hover:scale-110"
                                                         src={offer.propertyImage}
                                                         alt="Property"
                                                     />
                                                 </div>
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm font-semibold text-gray-700 text-center">
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm font-semibold text-gray-800">
                                                 {offer.location}
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm font-semibold text-gray-700 text-center">
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm font-semibold text-gray-800">
                                                 {offer.buyerName}
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm font-semibold text-gray-700 text-center">
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm font-semibold text-gray-800">
                                                 {offer.buyerEmail}
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm font-semibold text-gray-700 text-center">
-                                                ${offer.offerAmount}
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm font-semibold text-gray-800">
+                                                💵 ${offer.offerAmount}
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm font-semibold text-gray-700 text-center">
-                                                {offer.status}
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm font-semibold text-center">
+                                                <span
+                                                    className={`px-3 py-1 rounded-full text-sm font-semibold ${offer.status === "pending"
+                                                            ? "bg-yellow-100 text-yellow-700"
+                                                            : offer.status === "accepted"
+                                                                ? "bg-green-100 text-green-700"
+                                                                : "bg-red-100 text-red-700"
+                                                        }`}
+                                                >
+                                                    {offer.status}
+                                                </span>
                                             </td>
-                                            <td className="px-5 py-5 border-b border-gray-300 text-sm font-semibold text-center">
-                                                {offer.status === 'pending' && (
-                                                    <div className="flex justify-center gap-2">
+                                            <td className="px-5 py-4 border-b border-gray-200 text-sm font-semibold text-center">
+                                                {offer.status === "pending" && (
+                                                    <div >
+                                                        {/* Accept Button */}
                                                         <button
                                                             onClick={() => acceptOffer(offer._id, offer.propertyId)}
-                                                            className="bg-emerald-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-emerald-600 hover:shadow-lg transition duration-300 ease-in-out"
+                                                            className="relative overflow-hidden px-6 py-2 text-white font-semibold rounded-lg shadow-lg bg-gradient-to-r from-emerald-400 to-green-500 hover:from-green-500 hover:to-emerald-400 transition-all duration-300 transform hover:scale-105 group"
                                                         >
-                                                            Accept
+                                                            <span className="relative z-10 flex items-center gap-2">
+                                                                <svg
+                                                                    className="w-5 h-5"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M5 13l4 4L19 7"
+                                                                    ></path>
+                                                                </svg>
+                                                                Accept
+                                                            </span>
+                                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                                         </button>
+
+                                                        {/* Reject Button */}
                                                         <button
                                                             onClick={() => rejectOffer(offer._id)}
-                                                            className="bg-rose-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-rose-600 hover:shadow-lg transition duration-300 ease-in-out"
+                                                            className="relative overflow-hidden px-6 py-2 text-white font-semibold rounded-lg shadow-lg bg-gradient-to-r from-rose-400 to-red-500 hover:from-red-500 hover:to-rose-400 transition-all duration-300 transform hover:scale-105 group mt-5"
                                                         >
-                                                            Reject
+                                                            <span className="relative z-10 flex items-center gap-2">
+                                                                <svg
+                                                                    className="w-5 h-5"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        strokeWidth="2"
+                                                                        d="M6 18L18 6M6 6l12 12"
+                                                                    ></path>
+                                                                </svg>
+                                                                Reject
+                                                            </span>
+                                                            <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                                         </button>
                                                     </div>
                                                 )}
                                             </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                        </motion.tr>
+                                    ))
+                                ) : (
+                                    <motion.tr
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        <td colSpan="7" className="py-8 text-center">
+                                            <div className="flex flex-col items-center justify-center space-y-4">
+                                                <span className="text-6xl animate-bounce">🏜️</span>
+                                                <p className="text-xl font-bold text-gray-600">
+                                                    No Offers Yet!
+                                                </p>
+                                                <p className="text-gray-500">
+                                                    Start listing properties to see offers here! 🚀
+                                                </p>
+                                            </div>
+                                        </td>
+                                    </motion.tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
-                </div>
-            </div>
-        </>
+                </motion.div>
+
+                {/* Floating Decorations */}
+                <div className="absolute top-0 left-0 w-24 h-24 bg-purple-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_infinite]"></div>
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_2s_infinite]"></div>
+            </motion.div>
+        </div>
     );
 };
 

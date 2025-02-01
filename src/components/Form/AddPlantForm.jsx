@@ -2,252 +2,188 @@ import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import { shortImageName } from '../../pages/Dashboard/Seller/utilities';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import {motion} from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 
 const AddPlantForm = ({ handleSubmit, uploadButtonText, setUploadButtonText, loading }) => {
   const { user } = useAuth();
 
   return (
-    <div>
-      <div>
-        <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
-          <form onSubmit={handleSubmit}>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              <div className="space-y-6">
-                {/* Property Title */}
-                <div className="space-y-1 text-sm">
-                  <label className="block text-gray-600">
-                    Property Title
-                  </label>
-                  <input
-                    className="w-full px-4 py-3 text-gray-800 border border-pink-300 focus:outline-pink-500 rounded-md bg-white"
-                    name="title"
-                    id="title"
-                    type="text"
-                    placeholder="Property Title"
-                    required
-                  />
-                </div>
-                {/* Property Location */}
-                <div className="space-y-1 text-sm">
-                  <label className="block text-gray-600">
-                    Property Location
-                  </label>
-                  <input
-                    className="w-full px-4 py-3 text-gray-800 border border-pink-300 focus:outline-pink-500 rounded-md bg-white"
-                    name="location"
-                    id="location"
-                    type="text"
-                    placeholder="Property Location"
-                    required
-                  />
-                </div>
-                <div className="space-y-1 text-sm">
-                  <label className="block text-gray-600">
-                    Agent Name
-                  </label>
-                  <input
-                    className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
-                    name="agentName"
-                    id="agentName"
-                    type="text"
-                    defaultValue={user?.displayName}
-                    readOnly
-                  />
-                </div>
-                <div className="space-y-1 text-sm">
-                  <label className="block text-gray-600">
-                    Agent Email
-                  </label>
-                  <input
-                    className="w-full px-4 py-3 text-gray-800 border border-gray-300 rounded-md bg-gray-100"
-                    name="agentEmail"
-                    defaultValue={user?.email}
-                    id="agentEmail"
-                    type="email"
-                    readOnly
-                  />
-                </div>
-              </div>
-              <div className="space-y-6 flex flex-col">
-                {/* Price Range */}
-                {/* Minimum Price */}
-                <div className="space-y-1 text-sm">
-                  <label className="block text-gray-600">
-                    Minimum Price
-                  </label>
-                  <input
-                    className="w-full px-4 py-3 text-gray-800 border border-pink-300 focus:outline-pink-500 rounded-md bg-white"
-                    name="minPrice"
-                    id="priceRange"
-                    type="text"
-                    placeholder="Price (e.g., $100,000)"
-                    required
-                  />
-                </div>
-                {/* Maximum Price */}
-                <div className="space-y-1 text-sm">
-                  <label className="block text-gray-600">
-                    Maximum price
-                  </label>
-                  <input
-                    className="w-full px-4 py-3 text-gray-800 border border-pink-300 focus:outline-pink-500 rounded-md bg-white"
-                    name="maxPrice"
-                    id="priceRange"
-                    type="text"
-                    placeholder="Price (e.g., $100,000)"
-                    required
-                  />
-                </div>
-                {/* Property Image */}
-                <div className="p-4 w-full m-auto rounded-lg flex-grow">
-                  <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
-                    <div className="flex flex-col w-max mx-auto text-center">
-                      <label>
-                        <input
-                          onChange={(e) => setUploadButtonText({ image: e.target.files[0], url: URL.createObjectURL(e.target.files[0]) })}
-                          className="text-sm cursor-pointer w-36 hidden"
-                          type="file"
-                          name="image"
-                          id="image"
-                          accept="image/*"
-                          hidden
-                        />
-                        <div className="bg-pink-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-pink-500">
-                          {shortImageName(uploadButtonText?.image)}
-                        </div>
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                {/* Add Property Button */}
-                <button
-                  type="submit"
-                  className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500"
-                >
-                  {loading ? (
-                    <TbFidgetSpinner className='animate-spin m-auto' />
-                  ) : (
-                    'Add Property'
-                  )}
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      {/* <div className='w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50'>
-        <form>
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-10'>
-            <div className='space-y-6'>
-              
-              <div className='space-y-1 text-sm'>
-                <label htmlFor='name' className='block text-gray-600'>
-                  Name
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
+      <Helmet>
+        <title>🏡 Add Property </title>
+      </Helmet>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="container mx-auto"
+      >
+        {/* Header Section */}
+        <motion.div
+          initial={{ y: -50, scale: 0.9 }}
+          animate={{ y: 0, scale: 1 }}
+          transition={{ type: "spring", stiffness: 100 }}
+          className="text-center mb-12"
+        >
+          <h1 className="text-3xl md:text-6xl font-bold ">
+            🏡 Add Your Property
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 mt-4 animate-bounce">
+            List Your Dream Property and Make It Shine! ✨
+          </p>
+        </motion.div>
+
+        {/* Form Section */}
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="w-full max-w-4xl mx-auto"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-white/90  p-8 rounded-3xl shadow-2xl transform transition-transform duration-500 hover:scale-[101%]">
+            {/* Left Column */}
+            <div className="space-y-6">
+              {/* Property Title */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">🏷️</span>
+                  Property Title
                 </label>
                 <input
-                  className='w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white'
-                  name='name'
-                  id='name'
-                  type='text'
-                  placeholder='Plant Name'
+                  className="w-full px-4 py-3 text-gray-800 border-2 border-pink-200 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 hover:border-pink-400"
+                  name="title"
+                  type="text"
+                  placeholder="Enter property title"
                   required
                 />
               </div>
-              
-              <div className='space-y-1 text-sm'>
-                <label htmlFor='category' className='block text-gray-600 '>
-                  Category
-                </label>
-                <select
-                  required
-                  className='w-full px-4 py-3 border-lime-300 focus:outline-lime-500 rounded-md bg-white'
-                  name='category'
-                >
-                  <option value='Indoor'>Indoor</option>
-                  <option value='Outdoor'>Outdoor</option>
-                  <option value='Succulent'>Succulent</option>
-                  <option value='Flowering'>Flowering</option>
-                </select>
-              </div>
-              
-              <div className='space-y-1 text-sm'>
-                <label htmlFor='description' className='block text-gray-600'>
-                  Description
-                </label>
 
-                <textarea
-                  id='description'
-                  placeholder='Write plant description here...'
-                  className='block rounded-md focus:lime-300 w-full h-32 px-4 py-3 text-gray-800  border border-lime-300 bg-white focus:outline-lime-500 '
-                  name='description'
-                ></textarea>
+              {/* Property Location */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">📍</span>
+                  Property Location
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border-2 border-pink-200 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 hover:border-pink-400"
+                  name="location"
+                  type="text"
+                  placeholder="Enter property location"
+                  required
+                />
+              </div>
+
+              {/* Agent Name */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">👤</span>
+                  Agent Name
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border-2 border-gray-200 rounded-xl bg-gray-100 cursor-not-allowed"
+                  name="agentName"
+                  type="text"
+                  defaultValue={user?.displayName}
+                  readOnly
+                />
+              </div>
+
+              {/* Agent Email */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">📧</span>
+                  Agent Email
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border-2 border-gray-200 rounded-xl bg-gray-100 cursor-not-allowed"
+                  name="agentEmail"
+                  type="email"
+                  defaultValue={user?.email}
+                  readOnly
+                />
               </div>
             </div>
-            <div className='space-y-6 flex flex-col'>
-              
-              <div className='flex justify-between gap-2'>
-               
-                <div className='space-y-1 text-sm'>
-                  <label htmlFor='price' className='block text-gray-600 '>
-                    Price
-                  </label>
-                  <input
-                    className='w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white'
-                    name='price'
-                    id='price'
-                    type='number'
-                    placeholder='Price per unit'
-                    required
-                  />
-                </div>
 
-               
-                <div className='space-y-1 text-sm'>
-                  <label htmlFor='quantity' className='block text-gray-600'>
-                    Quantity
-                  </label>
-                  <input
-                    className='w-full px-4 py-3 text-gray-800 border border-lime-300 focus:outline-lime-500 rounded-md bg-white'
-                    name='quantity'
-                    id='quantity'
-                    type='number'
-                    placeholder='Available quantity'
-                    required
-                  />
-                </div>
+            {/* Right Column */}
+            <div className="space-y-6">
+              {/* Minimum Price */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">💰</span>
+                  Minimum Price
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border-2 border-pink-200 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 hover:border-pink-400"
+                  name="minPrice"
+                  type="text"
+                  placeholder="Enter minimum price"
+                  required
+                />
               </div>
-             
-              <div className=' p-4  w-full  m-auto rounded-lg flex-grow'>
-                <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
-                  <div className='flex flex-col w-max mx-auto text-center'>
+
+              {/* Maximum Price */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">💎</span>
+                  Maximum Price
+                </label>
+                <input
+                  className="w-full px-4 py-3 text-gray-800 border-2 border-pink-200 rounded-xl focus:border-pink-500 focus:ring-2 focus:ring-pink-200 transition-all duration-300 hover:border-pink-400"
+                  name="maxPrice"
+                  type="text"
+                  placeholder="Enter maximum price"
+                  required
+                />
+              </div>
+
+              {/* Property Image Upload */}
+              <div className="space-y-2">
+                <label className="block text-lg font-semibold text-gray-700 flex items-center gap-2">
+                  <span className="text-2xl">🖼️</span>
+                  Property Image
+                </label>
+                <div className="file_upload px-5 py-3 relative border-4 border-dotted border-pink-200 rounded-xl transition-all duration-300 hover:border-pink-400 hover:shadow-lg">
+                  <div className="flex flex-col w-max mx-auto text-center">
                     <label>
                       <input
-                        className='text-sm cursor-pointer w-36 hidden'
-                        type='file'
-                        name='image'
-                        id='image'
-                        accept='image/*'
+                        onChange={(e) => setUploadButtonText({ image: e.target.files[0], url: URL.createObjectURL(e.target.files[0]) })}
+                        className="text-sm cursor-pointer w-36 hidden"
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
                         hidden
                       />
-                      <div className='bg-lime-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-lime-500'>
-                        Upload
+                      <div className="bg-pink-500 text-white border border-gray-300 rounded-xl font-semibold cursor-pointer p-2 px-4 hover:bg-pink-600 transition-all duration-300">
+                        {shortImageName(uploadButtonText?.image)}
                       </div>
                     </label>
                   </div>
                 </div>
               </div>
 
-             
+              {/* Add Property Button */}
               <button
-                type='submit'
-                className='w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-lime-500 '
+                type="submit"
+                className="w-full p-3 mt-5 text-center font-medium text-white bg-gradient-to-r from-pink-500 to-purple-500 rounded-xl shadow-lg hover:from-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105"
               >
-                Save & Continue
+                {loading ? (
+                  <TbFidgetSpinner className="animate-spin m-auto" />
+                ) : (
+                  'Add Property 🚀'
+                )}
               </button>
             </div>
           </div>
-        </form>
-      </div> */}
+        </motion.form>
+
+        {/* Floating Decorations */}
+        {/* <div className="absolute top-0 left-0 w-24 h-24 bg-pink-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_infinite]"></div>
+        <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_2s_infinite]"></div> */}
+      </motion.div>
     </div>
   );
 };

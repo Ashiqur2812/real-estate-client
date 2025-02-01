@@ -54,13 +54,13 @@ const Navbar = () => {
                       to='/'
                       className='block px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                     >
-                      Home
+                      🏠 Home
                     </Link>
                     <Link
                       to='/all-property'
                       className='block  px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                     >
-                      All Properties
+                      🏘️ All Properties
                     </Link>
 
                     {user ? (
@@ -69,13 +69,13 @@ const Navbar = () => {
                           to='/dashboard'
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                         >
-                          Dashboard
+                          📊 Dashboard
                         </Link>
                         <div
                           onClick={logOut}
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
                         >
-                          Logout
+                          🚪 Logout
                         </div>
                       </>
                     ) : (
@@ -84,13 +84,13 @@ const Navbar = () => {
                           to='/login'
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                         >
-                          Login
+                            🔑 Login
                         </Link>
                         <Link
                           to='/signup'
                           className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
                         >
-                          Sign Up
+                            📝 Sign Up
                         </Link>
                       </>
                     )}

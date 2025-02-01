@@ -85,9 +85,9 @@ const ManageUsers = () => {
     }
   };
 
-  const deleteUser = async (id, email) => {
+  const deleteUser = async (id,email) => {
     try {
-      const response = await axiosSecure(`/users/${id}`);
+      const response = await axiosSecure.delete(`/users/${id}`);
       // console.log(response.data);
       Swal.fire({
         position: "center",
@@ -110,79 +110,98 @@ const ManageUsers = () => {
   return (
     <>
       <Helmet>
-        <title>Manage Users</title>
+        <title>Luxury User Estates</title>
       </Helmet>
-      <div className="container mx-auto my-12 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-center mb-10 text-gray-800 animate__animated animate__fadeInDown">
-          Manage Users
-        </h1>
-        <div className="overflow-x-auto shadow-2xl rounded-xl bg-opacity-80 backdrop-blur-lg">
-          <table className="w-full border-collapse bg-gradient-to-br from-gray-100 to-white shadow-xl rounded-xl animate__animated animate__fadeIn">
-            <thead>
-              <tr className="bg-gradient-to-r from-cyan-600 to-teal-700 text-white rounded-t-lg">
-                <th className="px-4 sm:px-6 py-4 text-md sm:text-lg font-semibold tracking-wide text-left">Name</th>
-                <th className="px-4 sm:px-6 py-4 text-md sm:text-lg font-semibold tracking-wide text-left">Email</th>
-                <th className="px-4 sm:px-6 py-4 text-md sm:text-lg font-semibold tracking-wide text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user, index) => (
-                <tr
-                  key={user._id}
-                  className={`hover:bg-blue-100 transition-all duration-300 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    }`}
-                >
-                  <td className="px-4 sm:px-6 py-4 text-gray-700 font-medium break-words">{user.name}</td>
-                  <td className="px-4 sm:px-6 py-4 text-gray-700 font-medium break-words">{user.email}</td>
-                  <td className="px-4 sm:px-6 py-4 flex flex-wrap gap-2 justify-center sm:justify-start">
-                    {user.role !== "fraud" && (
-                      <>
-                        <button
-                          onClick={() => makeAdmin(user._id)}
-                          className={`px-3 sm:px-4 py-2 rounded-lg text-white font-semibold shadow-md transition-transform transform hover:scale-105 ${user.role === "admin"
-                              ? "bg-gray-400 cursor-not-allowed"
-                              : "bg-green-500 hover:bg-green-600"
-                            }`}
-                          disabled={user.role === "admin"}
-                        >
-                          Make Admin
-                        </button>
-                        <button
-                          onClick={() => makeAgent(user._id)}
-                          className={`px-3 sm:px-4 py-2 rounded-lg text-white font-semibold shadow-md transition-transform transform hover:scale-105 ${user.role === "agent"
-                              ? "bg-gray-400 cursor-not-allowed"
-                              : "bg-blue-500 hover:bg-blue-600"
-                            }`}
-                          disabled={user.role === "agent"}
-                        >
-                          Make Agent
-                        </button>
-                      </>
-                    )}
-                    {user?.role === "agent" && user?.role !== "fraud" && (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-4xl sm:text-6xl font-bold text-center mb-12 [#313131] animate__animated animate__fadeInDown animate__delay-1s">
+            🏰 User Management
+          </h1>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate__animated animate__fadeInUp">
+            {users.map((user, index) => (
+              <div key={user._id} className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 border-4 border-indigo-50">
+                {/* User Status Ribbon */}
+                {user.role === "fraud" && (
+                  <div className="absolute -top-4 -right-4 bg-red-500 text-white px-6 py-2 rotate-45 shadow-lg animate__animated animate__heartBeat animate__infinite">
+                    ⚠️ Fraud
+                  </div>
+                )}
+
+                {/* User Avatar */}
+                <div className="flex justify-center mb-6">
+                  <div className="w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center border-4 border-indigo-200 animate__animated animate__bounceIn">
+                    <span className="text-4xl">👤{user?.photoURL}</span>
+                  </div>
+                </div>
+
+                {/* User Info */}
+                <div className="space-y-4 text-center">
+                  <h2 className="text-2xl font-bold text-gray-800 bg-gradient-to-r from-indigo-500 to-blue-600 bg-clip-text text-transparent">
+                    {user?.name}
+                  </h2>
+                  <p className="text-lg text-gray-600 font-medium">
+                    📧 {user?.email}
+                  </p>
+
+                  {/* Role Badge */}
+                  <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 text-indigo-800">
+                    <span className="mr-2">🎖️</span>
+                    {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-8 grid grid-cols-2 gap-3">
+                  {user.role !== "fraud" && (
+                    <>
                       <button
-                        onClick={() => markAsFraud(user._id)}
-                        className="px-3 sm:px-4 py-2 rounded-lg text-white font-semibold bg-yellow-500 hover:bg-yellow-600 shadow-md transition-transform transform hover:scale-105"
+                        onClick={() => makeAdmin(user._id)}
+                        disabled={user.role === "admin"}
+                        className={`p-3 rounded-xl flex flex-col items-center transition-all ${user.role === "admin"
+                            ? "bg-gray-300 cursor-not-allowed"
+                            : "bg-green-100 hover:bg-green-200 hover:scale-105"
+                          }`}
                       >
-                        Mark as Fraud
+                        <span className="text-2xl">👑</span>
+                        <span className="text-sm font-semibold text-green-800">Crown Admin</span>
                       </button>
-                    )}
+
+                      <button
+                        onClick={() => makeAgent(user._id)}
+                        disabled={user.role === "agent"}
+                        className={`p-3 rounded-xl flex flex-col items-center transition-all ${user.role === "agent"
+                            ? "bg-gray-300 cursor-not-allowed"
+                            : "bg-blue-100 hover:bg-blue-200 hover:scale-105"
+                          }`}
+                      >
+                        <span className="text-2xl">🕵️</span>
+                        <span className="text-sm font-semibold text-blue-800">Assign Agent</span>
+                      </button>
+                    </>
+                  )}
+
+                  <button
+                    onClick={() => deleteUser(user._id,user?.email)}
+                    className="p-3 rounded-xl bg-red-100 hover:bg-red-200 hover:scale-105 transition-all col-span-2 flex items-center justify-center"
+                  >
+                    <span className="text-2xl mr-2">🗑️</span>
+                    <span className="text-sm font-semibold text-red-800">Remove User</span>
+                  </button>
+
+                  {user?.role === "agent" && (
                     <button
-                      onClick={() => deleteUser(user._id, user.email)}
-                      className="px-3 sm:px-4 py-2 rounded-lg text-white font-semibold bg-rose-500 hover:bg-rose-600 shadow-md transition-transform transform hover:scale-105"
+                      onClick={() => markAsFraud(user._id)}
+                      className="p-3 rounded-xl bg-yellow-100 hover:bg-yellow-200 hover:scale-105 transition-all col-span-2 flex items-center justify-center"
                     >
-                      Delete User
+                      <span className="text-2xl mr-2">🕵️♂️</span>
+                      <span className="text-sm font-semibold text-yellow-800">Mark as Fraud</span>
                     </button>
-                    {user.role === "fraud" && (
-                      <p className="mt-2 text-rose-600 font-bold animate__animated animate__flash">
-                        Fraud
-                      </p>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>
