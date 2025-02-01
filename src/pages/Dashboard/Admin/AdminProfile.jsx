@@ -9,7 +9,7 @@ const AdminProfile = () => {
     const [role, isLoading] = useRole();
     if (loading, isLoading) return <LoadingSpinner />;
 
-    console.log(user);
+    // console.log(user);
     return (
         <div className='flex justify-center items-center h-screen'>
             <Helmet>

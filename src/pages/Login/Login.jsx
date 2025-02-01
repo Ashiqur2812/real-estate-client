@@ -32,7 +32,7 @@ const Login = () => {
       });
       navigate(from, { replace: true });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: `${err?.message}`,
         icon: "error",
@@ -59,7 +59,7 @@ const Login = () => {
       navigate(from, { replace: true });
       // toast.success('Login Successful')
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       Swal.fire({
         title: `${err?.message}`,
         icon: "error",

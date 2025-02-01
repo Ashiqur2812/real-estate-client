@@ -8,7 +8,7 @@ const Profile = () => {
   const { user, loading } = useAuth();
   // console.log(user)
   const [role, isLoading] = useRole();
-  console.log(role);
+  // console.log(role);
   if (loading, isLoading) return <LoadingSpinner />;
 
   return (

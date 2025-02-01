@@ -18,11 +18,11 @@ const Payment = () => {
         queryKey: ['offer'],
         queryFn: async () => {
             const { data } = await axiosSecure(`/offer/${user?.email}`);
-            console.log(data);
+            // console.log(data);
             return data;
         }
     });
-    console.log(offer);
+    // console.log(offer);
     if (isLoading) return <LoadingSpinner />;
 
     return (
