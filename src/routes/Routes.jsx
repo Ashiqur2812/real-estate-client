@@ -11,10 +11,10 @@ import ManageUsers from '../pages/Dashboard/Admin/ManageUsers';
 import Profile from '../pages/Dashboard/Common/Profile';
 import Statistics from '../pages/Dashboard/Common/Statistics';
 import MainLayout from '../layouts/MainLayout';
-import MyInventory from '../pages/Dashboard/Seller/MyInventory';
-import ManageOrders from '../pages/Dashboard/Seller/ManageOrders';
-import MyOrders from '../pages/Dashboard/Customer/MyOrders';
-import AllProperty from '../components/allProperty/AllProperty';
+// import MyInventory from '../pages/Dashboard/Seller/MyInventory';
+// import ManageOrders from '../pages/Dashboard/Seller/ManageOrders';
+// import MyOrders from '../pages/Dashboard/Customer/MyOrders';
+// import AllProperty from '../components/allProperty/AllProperty';
 import WishList from '../components/Dashboard/Sidebar/Menu/WishList';
 import Offer from '../components/Dashboard/Sidebar/Menu/Offer';
 import PropertyBought from '../components/Dashboard/Sidebar/Menu/PropertyBought';
@@ -31,6 +31,7 @@ import AdminProfile from '../pages/Dashboard/Admin/AdminProfile';
 import ManageReviews from '../pages/Dashboard/Admin/ManageReviews';
 import Payment from '../components/Dashboard/Sidebar/Menu/Payment';
 import MySoldProperties from '../pages/Dashboard/Agent/MySoldProperties';
+import AllProperty from '../components/allProperty/AllProperty';
 
 export const router = createBrowserRouter([
   {

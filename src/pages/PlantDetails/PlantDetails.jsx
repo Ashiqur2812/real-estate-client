@@ -9,6 +9,7 @@ import useAxiosSecure from '../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import useAuth from '../../hooks/useAuth';
 import useRole from '../../hooks/useRole';
+import axios from 'axios';
 
 const PlantDetails = () => {
   const { user } = useAuth();
@@ -22,7 +23,7 @@ const PlantDetails = () => {
   const { data: property = [], isLoading } = useQuery({
     queryKey: ['properties', id],
     queryFn: async () => {
-      const { data } = await axiosSecure(`/properties/${id}`);
+      const { data } = await axios(`/properties/${id}`);
       // console.log(data);
       return data;
     }

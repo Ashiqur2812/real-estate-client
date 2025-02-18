@@ -6,7 +6,7 @@ import AdminMenu from './Menu/AdminMenu';
 import { Link } from 'react-router-dom';
 import SellerMenu from './Menu/SellerMenu';
 import CustomerMenu from './Menu/CustomerMenu';
-import logo from '../../../assets/images/elegant-logo.webp';
+import logo from '../../../assets/images/A stunning and professional animated logo.webp';
 import useRole from '../../../hooks/useRole';
 import { motion } from 'framer-motion';
 
