@@ -9,11 +9,12 @@ const Statistics = () => {
   if(isLoading) return <LoadingSpinner/>
   if (role === 'user') return <Navigate to='/dashboard/profile' />;
   if (role === 'agent') return <Navigate to='/dashboard/agent-profile' />
+  if (role === 'admin') return <Navigate to='/dashboard/admin-profile' />
 
   return (
     <div>
       <Helmet>
-        <title>Dashboard</title>
+        <title>📊Dashboard</title>
       </Helmet>
       {/* {role === 'admin' && <AdminStatistics />} */}
     </div>

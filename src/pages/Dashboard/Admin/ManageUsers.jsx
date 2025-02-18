@@ -85,27 +85,52 @@ const ManageUsers = () => {
     }
   };
 
-  const deleteUser = async (id,email) => {
-    try {
-      const response = await axiosSecure.delete(`/users/${id}`);
-      // console.log(response.data);
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: `User with email ${email} has been deleted.`,
-        showConfirmButton: false,
-        timer: 3000
-      });
-      refetch();
-    } catch (error) {
-      // console.log(error);
-      Swal.fire({
-        title: `${error?.message}`,
-        icon: "error",
-        draggable: true
-      });
-    }
+  const deleteUser = async (id, email) => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#EF4444',
+      cancelButtonColor: '#6B7280',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      reverseButtons: true,
+      customClass: {
+        popup: 'rounded-2xl',
+        confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+        cancelButton: 'px-6 py-2 bg-gray-500 hover:bg-gray-600 transition-all duration-300',
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const response = await axiosSecure.delete(`/users/${id}`);
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'User has been deleted.',
+            icon: 'success',
+            confirmButtonColor: '#10B981',
+            customClass: {
+              popup: 'rounded-2xl',
+              confirmButton: 'px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 transition-all duration-300',
+            },
+          });
+          refetch();
+        } catch (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong!',
+            text: error.message,
+            customClass: {
+              popup: 'rounded-2xl',
+              confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+            },
+          });
+        }
+      }
+    });
   };
+
 
   return (
     <>
@@ -118,7 +143,7 @@ const ManageUsers = () => {
             🏰 User Management
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate__animated animate__fadeInUp">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-6 gap-y-20 animate__animated animate__fadeInUp">
             {users.map((user, index) => (
               <div key={user._id} className="relative bg-white rounded-3xl p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 border-4 border-indigo-50">
                 {/* User Status Ribbon */}
@@ -130,8 +155,12 @@ const ManageUsers = () => {
 
                 {/* User Avatar */}
                 <div className="flex justify-center mb-6">
-                  <div className="w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center border-4 border-indigo-200 animate__animated animate__bounceIn">
-                    <span className="text-4xl">👤{user?.photoURL}</span>
+                  <div className="rounded-full bg-indigo-100 flex items-center justify-center border-4 border-indigo-200 animate__animated animate__bounceIn">
+                    {user?.image ? (
+                      <img src={user?.image} alt="User Image" className="w-24 h-24 object-cover rounded-full transition-all hover:scale-105 duration-300 ease-in-out" />
+                    ) : (
+                      <span className="text-4xl">👤</span>
+                    )}
                   </div>
                 </div>
 
@@ -159,8 +188,8 @@ const ManageUsers = () => {
                         onClick={() => makeAdmin(user._id)}
                         disabled={user.role === "admin"}
                         className={`p-3 rounded-xl flex flex-col items-center transition-all ${user.role === "admin"
-                            ? "bg-gray-300 cursor-not-allowed"
-                            : "bg-green-100 hover:bg-green-200 hover:scale-105"
+                          ? "bg-gray-300 cursor-not-allowed"
+                          : "bg-green-100 hover:bg-green-200 hover:scale-105"
                           }`}
                       >
                         <span className="text-2xl">👑</span>
@@ -171,8 +200,8 @@ const ManageUsers = () => {
                         onClick={() => makeAgent(user._id)}
                         disabled={user.role === "agent"}
                         className={`p-3 rounded-xl flex flex-col items-center transition-all ${user.role === "agent"
-                            ? "bg-gray-300 cursor-not-allowed"
-                            : "bg-blue-100 hover:bg-blue-200 hover:scale-105"
+                          ? "bg-gray-300 cursor-not-allowed"
+                          : "bg-blue-100 hover:bg-blue-200 hover:scale-105"
                           }`}
                       >
                         <span className="text-2xl">🕵️</span>
@@ -182,7 +211,7 @@ const ManageUsers = () => {
                   )}
 
                   <button
-                    onClick={() => deleteUser(user._id,user?.email)}
+                    onClick={() => deleteUser(user._id, user?.email)}
                     className="p-3 rounded-xl bg-red-100 hover:bg-red-200 hover:scale-105 transition-all col-span-2 flex items-center justify-center"
                   >
                     <span className="text-2xl mr-2">🗑️</span>

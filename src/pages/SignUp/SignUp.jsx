@@ -3,13 +3,15 @@ import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../hooks/useAuth';
 import { TbFidgetSpinner } from 'react-icons/tb';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import { imageUpload } from '../../components/api/utils';
+import { motion } from 'framer-motion';
+import bgImg from '../../assets/images/SignUp.webp';
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle, loading, userSetToDb } = useAuth();
   const navigate = useNavigate();
-  // form submit handler
+
+  // Form Submit Handler
   const handleSubmit = async e => {
     e.preventDefault();
     const form = e.target;
@@ -17,174 +19,148 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-    // console.log(image);
     const photoURL = await imageUpload(image);
 
     try {
-      //2. User Registration
-
       const result = await createUser(email, password);
       if (result?.user) {
-        userSetToDb({ displayName: name, photoURL: photoURL, email: email });
+        userSetToDb({ displayName: name, photoURL, email });
       }
 
-      //3. Save username & profile photo
       await updateUserProfile(name, photoURL);
-      // console.log(result);
+
+      // 🎉 Gorgeous Animated SweetAlert
       Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Sign Up Successful",
+        title: '🏡 Welcome to DreamWell!',
+        text: "You're now a proud homeowner... at least digitally! 🎊",
+        imageUrl: 'https://media.giphy.com/media/3o7bu3XilJ5BOiSGic/giphy.gif',
+        imageWidth: 200,
+        imageHeight: 200,
+        imageAlt: 'Funny house gif',
         showConfirmButton: false,
-        timer: 1500
+        timer: 4000,
+        background: '#fff8e1'
       });
+
       navigate('/');
     } catch (err) {
-      // console.log(err);
       Swal.fire({
-        title: `${err?.message}`,
+        title: `Oops! ${err?.message}`,
         icon: "error",
-        draggable: true
+        showClass: {
+          popup: "animate__animated animate__shakeX"
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOut"
+        },
+        backdrop: `rgba(0,0,0,0.4) url("https://media.giphy.com/media/l2SpZkQ0XT0j6vCko/giphy.gif") left top no-repeat`
       });
     }
   };
 
-  // Handle Google Signin
+  // Handle Google Sign-in
   const handleGoogleSignIn = async () => {
     try {
-      //User Registration using google
       const data = await signInWithGoogle();
       if (data?.user) {
         userSetToDb({ displayName: data.user?.displayName, photoURL: data.user?.photoURL, email: data.user?.email });
       }
-      // console.log(data);
+
       Swal.fire({
-        position: "center",
+        title: '🌍 Signed Up with Google!',
+        text: "Welcome to DreamWell! Enjoy your digital real estate journey.",
         icon: "success",
-        title: "Sign Up Successful",
         showConfirmButton: false,
-        timer: 1500
+        timer: 4000
       });
+
       navigate('/');
     } catch (err) {
-      // console.log(err);
       Swal.fire({
         title: `${err?.message}`,
-        icon: "error",
-        draggable: true
+        icon: "error"
       });
     }
   };
+
   return (
-    <div className='flex justify-center items-center min-h-screen bg-white'>
-      <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
-        <div className='mb-8 text-center'>
-          <h1 className='my-3 text-4xl font-bold'>Sign Up</h1>
-          <p className='text-sm text-gray-400'>Welcome to DreamWell</p>
-        </div>
-        <form
-          onSubmit={handleSubmit}
-          noValidate=''
-          action=''
-          className='space-y-6 ng-untouched ng-pristine ng-valid'
-        >
-          <div className='space-y-4'>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Name
-              </label>
-              <input
-                type='text'
-                name='name'
-                id='name'
-                placeholder='Enter Your Name Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-teal-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <label htmlFor='image' className='block mb-2 text-sm'>
-                Select Image:
-              </label>
-              <input
-                required
-                type='file'
-                id='image'
-                name='image'
-                accept='image/*'
-              />
-            </div>
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm'>
-                Email address
-              </label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                required
-                placeholder='Enter Your Email Here'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-teal-500 bg-gray-200 text-gray-900'
-                data-temp-mail-org='0'
-              />
-            </div>
-            <div>
-              <div className='flex justify-between'>
-                <label htmlFor='password' className='text-sm mb-2'>
-                  Password
-                </label>
-              </div>
-              <input
-                type='password'
-                name='password'
-                autoComplete='new-password'
-                id='password'
-                required
-                placeholder='*******'
-                className='w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-teal-500 bg-gray-200 text-gray-900'
-              />
-            </div>
-          </div>
+    <div className='relative min-h-screen flex items-center justify-center bg-cover bg-center'
+      style={{
+        backgroundImage: `url(${bgImg})`
+      }}>
 
-          <div>
-            <button
-              type='submit'
-              className='bg-teal-500 w-full rounded-md py-3 text-white'
-            >
-              {loading ? (
-                <TbFidgetSpinner className='animate-spin m-auto' />
-              ) : (
-                'Continue'
-              )}
-            </button>
-          </div>
-        </form>
-        <div className='flex items-center pt-4 space-x-1'>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-          <p className='px-3 text-sm dark:text-gray-400'>
-            Signup with social accounts
-          </p>
-          <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
-        </div>
-        <div
-          onClick={handleGoogleSignIn}
-          className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
-        >
-          <FcGoogle size={32} />
+      {/* Overlay Effect */}
+      <div className="absolute inset-0 bg-black/40 bg-opacity-40"></div>
 
-          <p>Continue with Google</p>
+      {/* Main Content */}
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-10 max-w-md p-4 md:px-20 bg-opacity-90 backdrop-blur-2xl shadow-2xl rounded-lg"
+      >
+        <div className='text-center mb-6'>
+          <h1 className='text-4xl font-extrabold text-white animate__animated animate__bounce pb-4'>
+            Sign Up 🎊
+          </h1>
+          <p className='text-sm text-white'>Join DreamWell & Find Your Dream Home</p>
         </div>
-        <p className='px-6 text-sm text-center text-gray-400'>
-          Already have an account?{' '}
-          <Link
-            to='/login'
-            className='hover:underline hover:text-lime-500 text-gray-600'
+
+        <form onSubmit={handleSubmit} className='space-y-5'>
+          <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5 }}>
+            <label className='block text-sm font-medium text-white'>Name</label>
+            <input type='text' name='name' className='w-full p-3 border rounded-lg focus:outline-teal-500 bg-gray-200' />
+          </motion.div>
+
+          <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5 }}>
+            <label className='block text-sm font-medium text-white'>Profile Picture</label>
+            <input type='file' name='image' accept='image/*' className='w-full p-2 border rounded-lg text-white' />
+          </motion.div>
+
+          <motion.div initial={{ x: -50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5 }}>
+            <label className='block text-sm font-medium text-white'>Email</label>
+            <input type='email' name='email' className='w-full p-3 border rounded-lg focus:outline-teal-500 bg-gray-200' />
+          </motion.div>
+
+          <motion.div initial={{ x: 50, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ duration: 0.5 }}>
+            <label className='block text-sm font-medium text-white'>Password</label>
+            <input type='password' name='password' className='w-full p-3 border rounded-lg focus:outline-teal-500 bg-gray-200' />
+          </motion.div>
+
+          <motion.button
+            type='submit'
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className='w-full bg-gradient-to-r from-teal-500 to-green-400 text-white py-3 rounded-lg shadow-md flex items-center justify-center'
           >
+            {loading ? <TbFidgetSpinner className='animate-spin text-2xl' /> : "Sign Up 🚀"}
+          </motion.button>
+        </form>
+
+        <div className='text-center mt-4'>
+          <p className='text-sm text-white'>Or sign up with</p>
+          <motion.div
+            onClick={handleGoogleSignIn}
+            className="flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 rounded-md cursor-pointer hover:bg-gray-50 transition-all duration-300 "
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 1.6 }}
+          >
+            <FcGoogle size={32} />
+            <p className='text-white hover:text-black hover:font-semibold'>Continue with Google</p>
+          </motion.div>
+        </div>
+
+        <p className='mt-4 text-center text-sm text-white'>Already have an account?
+          <Link to='/login' className='hover:text-teal-600 hover:underline'>
             Login
           </Link>
-          .
+          <br />
+          <Link to='/' className='hover:text-teal-600 hover:underline'>
+            Go Home
+          </Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

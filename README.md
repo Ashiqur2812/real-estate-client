@@ -47,7 +47,7 @@ Search properties by location and filter by price range for a seamless browsing 
 Comprehensive management tools for properties, users, and reviews. Admins can advertise properties on the homepage.
 
 🛠️ Technologies Used
-Frontend: React.js, Tailwind CSS, Framer Motion, Lottie Files, Swiper.js
+Frontend: React.js, Tailwind CSS, Framer Motion, Lottie Files,
 
 Backend: Node.js, Express.js, MongoDB
 
@@ -63,9 +63,9 @@ Animations: Framer Motion, Lottie Files
 Explore the live site here: [https://auth-moha-milon-76938.web.app]
 
 📂 Repository Links
-Client Side: [https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Ashiqur2812]
+Client Side: [https://github.com/Ashiqur2812/real-estate-client]
 
-Server Side: [https://github.com/Programming-Hero-Web-Course4/b10a12-server-side-Ashiqur2812]
+Server Side: [https://github.com/Ashiqur2812/real-estate-server]
 
 🔑 Admin & Agent Credentials
 Admin Email: rup@ban.com 

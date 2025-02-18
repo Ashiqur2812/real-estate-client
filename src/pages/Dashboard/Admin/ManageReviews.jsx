@@ -22,24 +22,51 @@ const ManageReviews = () => {
     if (isLoading) return <LoadingSpinner />;
 
     const deleteReview = async (id) => {
-        try {
-            const res = await axiosSecure.delete(`/review/${id}`);
-            // console.log(res.data);
-            Swal.fire({
-                title: "Reviews deleted successfully!!!",
-                icon: "success",
-                draggable: true
-            })
-            refetch();
-        } catch (error) {
-            // console.log(error);
-            Swal.fire({
-                icon: "error",
-                title: `${error.message}`,
-                draggable: true
-            });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF4444',
+            cancelButtonColor: '#6B7280',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+            customClass: {
+                popup: 'rounded-2xl',
+                confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+                cancelButton: 'px-6 py-2 bg-gray-500 hover:bg-gray-600 transition-all duration-300',
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const res = await axiosSecure.delete(`/review/${id}`);
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Review has been deleted.',
+                        icon: 'success',
+                        confirmButtonColor: '#10B981',
+                        customClass: {
+                            popup: 'rounded-2xl',
+                            confirmButton: 'px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 transition-all duration-300',
+                        },
+                    });
+                    refetch();
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong!',
+                        text: error.message,
+                        customClass: {
+                            popup: 'rounded-2xl',
+                            confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+                        },
+                    });
+                }
+            }
+        });
     };
+
 
     return (
         <>

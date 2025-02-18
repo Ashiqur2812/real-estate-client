@@ -14,7 +14,7 @@ const Navbar = () => {
     <div className='fixed w-full top-0 z-50 backdrop-blur-md shadow-sm'>
       <div className='py-4'>
         <Container>
-          <div className='flex flex-row  items-center justify-between gap-3 md:gap-0'>
+          <div className='flex flex-row items-center justify-between gap-3 md:gap-0'>
             {/* Logo */}
             <div className='flex items-center gap-x-3'>
               <div>

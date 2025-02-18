@@ -253,8 +253,8 @@ const OfferedProperties = () => {
                 </motion.div>
 
                 {/* Floating Decorations */}
-                <div className="absolute top-0 left-0 w-24 h-24 bg-purple-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_infinite]"></div>
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_2s_infinite]"></div>
+                {/* <div className="absolute top-0 left-0 w-24 h-24 bg-purple-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_infinite]"></div>
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-blue-200 rounded-full blur-xl opacity-30 animate-[float_6s_ease-in-out_2s_infinite]"></div> */}
             </motion.div>
         </div>
     );

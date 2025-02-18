@@ -1,9 +1,6 @@
 import Container from '../../components/Shared/Container';
 import { Helmet } from 'react-helmet-async';
 import Heading from '../../components/Shared/Heading';
-// import Button from '../../components/Shared/Button/Button';
-// import PurchaseModal from '../../components/Modal/PurchaseModal';
-// import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
@@ -50,13 +47,13 @@ const PlantDetails = () => {
         icon: "success",
         title: "Property Added Successfully!!!",
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
       });
       navigate('/dashboard/wish-list');
     } catch (error) {
       console.error('Error adding to wishlist:', error);
       Swal.fire({
-        title: `${error?.message}`,
+        title: `${error?.response?.data?.message}`,
         icon: "error",
         draggable: true
       });
@@ -119,7 +116,7 @@ const PlantDetails = () => {
                   <button
                     onClick={handleWishList}
                     disabled={role === 'admin' || role === 'agent'}
-                    className="heartBeat bg-gradient-to-r from-pink-400 to-red-500 text-white px-8 py-3 rounded-full hover:from-red-500 hover:to-pink-400 transition-all transform hover:scale-110 disabled:opacity-50"
+                    className="heartBeat bg-gradient-to-r from-pink-400 to-rose-500 text-white px-8 py-3 rounded-full hover:from-rose-500 hover:to-pink-400 transition-all transform hover:scale-110 disabled:opacity-50"
                   >
                     ❤️ Add to Wishlist
                   </button>

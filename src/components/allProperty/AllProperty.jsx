@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import Container from '../Shared/Container';
-import LoadingSpinner from '../Shared/LoadingSpinner';
+// import LoadingSpinner from '../Shared/LoadingSpinner';
 import Card from '../Home/Card';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
@@ -57,7 +57,7 @@ const AllProperty = () => {
                 {/* Property Grid */}
                 {
                     properties.length > 0 ? (
-                        <div className='pt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8'>
+                        <div className='pt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-10'>
                             {properties.map(property => <Card key={property._id} property={property} />)}
                         </div>
                     ) : (

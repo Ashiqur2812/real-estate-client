@@ -13,51 +13,46 @@ const ManageProperties = () => {
         queryKey: ['properties'],
         queryFn: async () => {
             const { data } = await axiosSecure('/properties/pending');
-            // console.log(data);
             return data;
         }
     });
-    // console.log(properties);
+
     if (isLoading) return <LoadingSpinner />;
 
     const verifyProperty = async (id) => {
         try {
-            const res = await axiosSecure.patch(`/verify-property/${id}`);
-            // console.log(res.data);
+            await axiosSecure.patch(`/verify-property/${id}`);
             Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Property Has Been Verified Successfully!!!",
+                title: "Property Has Been Verified Successfully!",
                 showConfirmButton: false,
                 timer: 3000
             });
             refetch();
         } catch (error) {
-            // console.log(error);
             Swal.fire({
-                title: `${error?.message}`,
+                title: `Error: ${error?.message}`,
                 icon: "error",
                 draggable: true
             });
         }
     };
 
-    const rejectProperty = async id => {
+    const rejectProperty = async (id) => {
         try {
-            const response = await axiosSecure.patch(`/reject-property/${id}`);
-            // console.log(response.data);
+            await axiosSecure.patch(`/reject-property/${id}`);
             Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "Property Has Been Rejected Successfully!!!",
+                title: "Property Has Been Rejected Successfully!",
                 showConfirmButton: false,
                 timer: 3000
             });
             refetch();
         } catch (error) {
-            // console.log(error);
             Swal.fire({
-                title: `${error?.message}`,
+                title: `Error: ${error?.message}`,
                 icon: "error",
                 draggable: true
             });
@@ -80,7 +75,7 @@ const ManageProperties = () => {
                     initial={{ y: -50, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, type: "spring" }}
-                    className="text-4xl sm:text-6xl font-bold text-center mb-12  bg-clip-text "
+                    className="text-4xl sm:text-6xl font-bold text-center mb-12 bg-clip-text"
                 >
                     🏡 Property Palace Management
                 </motion.h1>
@@ -101,19 +96,26 @@ const ManageProperties = () => {
                         >
                             {/* Status Ribbon */}
                             {property.status !== "pending" && (
-                                <div className={`absolute -top-4 -right-4 px-6 py-2 rotate-45 shadow-lg ${property.status === "verified"
-                                        ? "bg-emerald-500 text-white"
-                                        : "bg-pink-500 text-white"
-                                    }`}>
+                                <div className={`absolute -top-4 -right-4 px-6 py-2 rotate-45 shadow-lg 
+                                    ${property.status === "verified" ? "bg-emerald-500 text-white" : "bg-pink-500 text-white"}`}
+                                >
                                     {property.status === "verified" ? "✅ Verified" : "❌ Rejected"}
                                 </div>
                             )}
 
                             {/* Property Card Content */}
                             <div className="space-y-4">
-                                {/* Property Image Placeholder */}
-                                <div className="h-48 bg-teal-100 rounded-xl flex items-center justify-center text-6xl">
-                                    <img className='w-full h-full rounded-xl' src={property?.image}  alt="" />
+                                {/* Property Image */}
+                                <div className="h-48 bg-teal-100 rounded-xl flex items-center justify-center text-6xl overflow-hidden">
+                                    {property?.image ? (
+                                        <img
+                                            className='w-full h-full object-cover rounded-xl transition-all duration-300 ease-in-out hover:scale-110'
+                                            src={property.image}
+                                            alt="Property"
+                                        />
+                                    ) : (
+                                        <span>🏡</span>
+                                    )}
                                 </div>
 
                                 <h2 className="text-2xl font-bold text-gray-800 mt-4">
@@ -141,7 +143,7 @@ const ManageProperties = () => {
                                         <div className="flex flex-col gap-3">
                                             <motion.button
                                                 onClick={() => verifyProperty(property._id)}
-                                                className="w-full py-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white rounded-xl shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-all"
+                                                className="w-full py-3 bg-gradient-to-r from-emerald-400 to-teal-500 text-white rounded-xl shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-all duration-300 ease-in-out"
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -149,7 +151,7 @@ const ManageProperties = () => {
                                             </motion.button>
                                             <motion.button
                                                 onClick={() => rejectProperty(property._id)}
-                                                className="w-full py-3 bg-gradient-to-r from-pink-400 to-rose-500 text-white rounded-xl shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-all"
+                                                className="w-full py-3 bg-gradient-to-r from-pink-400 to-rose-500 text-white rounded-xl shadow-lg flex items-center justify-center gap-2 hover:shadow-xl transition-all duration-300 ease-in-out"
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                             >
@@ -157,10 +159,9 @@ const ManageProperties = () => {
                                             </motion.button>
                                         </div>
                                     ) : (
-                                        <div className={`text-center py-3 rounded-xl ${property.status === "verified"
-                                                ? "bg-emerald-100 text-emerald-700"
-                                                : "bg-pink-100 text-pink-700"
-                                            }`}>
+                                        <div className={`text-center py-3 rounded-xl 
+                                            ${property.status === "verified" ? "bg-emerald-100 text-emerald-700" : "bg-pink-100 text-pink-700"}`}
+                                        >
                                             <p className="font-bold text-lg">
                                                 {property.status === "verified"
                                                     ? "✨ Approved & Verified"
@@ -171,37 +172,23 @@ const ManageProperties = () => {
                                 </div>
                             </div>
                         </motion.div>
-                    ))}my
+                    ))}
                 </motion.div>
 
-                {/* Floating Decorations */}
-                <div className="hidden lg:block">
+                {/* Empty State */}
+                {properties.length === 0 && (
                     <motion.div
-                        className="absolute top-20 left-20 w-16 h-16 bg-teal-200 rounded-full"
-                        animate={{ y: [0, -20, 0] }}
-                        transition={{ duration: 4, repeat: Infinity }}
-                    />
-                    <motion.div
-                        className="absolute top-1/3 right-32 w-24 h-24 bg-blue-200 rounded-lg rotate-45"
-                        animate={{ y: [0, -30, 0] }}
-                        transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
-                    />
-                </div>
+                        className="text-center py-12"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                    >
+                        <div className="text-8xl mb-4">🏚️</div>
+                        <h2 className="text-2xl font-bold text-gray-700">
+                            No properties in the kingdom yet!
+                        </h2>
+                    </motion.div>
+                )}
             </div>
-
-            {/* Empty State */}
-            {properties.length === 0 && (
-                <motion.div
-                    className="text-center py-12"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                >
-                    <div className="text-8xl mb-4">🏚️</div>
-                    <h2 className="text-2xl font-bold text-gray-700">
-                        No properties in the kingdom yet!
-                    </h2>
-                </motion.div>
-            )}
         </motion.div>
     );
 };

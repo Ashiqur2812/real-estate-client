@@ -57,14 +57,17 @@ const AuthProvider = ({ children }) => {
             email: currentUser?.email,
           },
           { withCredentials: true }
+          
         );
+        setLoading(false);
       } else {
         setUser(currentUser);
         await axios.get(`${import.meta.env.VITE_API_URL}/logout`, {
           withCredentials: true,
         });
+        setLoading(false);
       }
-      setLoading(false);
+      
     });
     return () => {
       return unsubscribe();

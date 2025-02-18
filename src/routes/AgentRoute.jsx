@@ -5,9 +5,10 @@ import { Navigate } from 'react-router-dom';
 
 const AgentRoute = ({ children }) => {
     const [role, isLoading] = useRole();
+    // console.log(role)
     if (isLoading) return <LoadingSpinner />;
     if (role === 'agent') return children;
-
+    
     return <Navigate to='/dashboard/agent-profile' />;
 };
 

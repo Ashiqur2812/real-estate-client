@@ -3,48 +3,70 @@ import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import LoadingSpinner from '../../../Shared/LoadingSpinner';
 import { Helmet } from 'react-helmet-async';
 import Container from '../../../Shared/Container';
-import {motion} from 'framer-motion';
+import { motion } from 'framer-motion';
 import Swal from 'sweetalert2';
 import useAuth from '../../../../hooks/useAuth';
 
 const MyReviews = () => {
     const axiosSecure = useAxiosSecure();
-    const {user} = useAuth();
-    // const queryClient = useQueryClient();
+    const { user } = useAuth();
 
     // Fetch reviews for the logged-in user
-    const { data: review = [], isLoading,refetch } = useQuery({
-        queryKey: ['myReview',user?.email],
+    const { data: review = [], isLoading, refetch } = useQuery({
+        queryKey: ['myReview', user?.email],
         queryFn: async () => {
             const { data } = await axiosSecure(`/review/${user?.email}`);
-            // console.log(data);
             return data;
         },
     });
 
-    // console.log(reviews);
-
     if (isLoading) return <LoadingSpinner />;
 
-    // Handle review deletion
+    // Handle review deletion with confirmation
     const handleDelete = async (id) => {
-        try {
-            const { data } = await axiosSecure.delete(`/review/${id}`);
-            Swal.fire({
-                title: "Review deleted successfully!!!",
-                icon: "success",
-                draggable: true
-            });
-            // console.log(data);
-            refetch();
-        } catch (error) {
-            // console.log(error.message);
-            Swal.fire({
-                icon: "error",
-                title: "Something went wrong!",
-                draggable: true
-            });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF4444',
+            cancelButtonColor: '#6B7280',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+            customClass: {
+                popup: 'rounded-2xl',
+                confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+                cancelButton: 'px-6 py-2 bg-gray-500 hover:bg-gray-600 transition-all duration-300',
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axiosSecure.delete(`/review/${id}`);
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your review has been deleted.',
+                        icon: 'success',
+                        confirmButtonColor: '#10B981',
+                        customClass: {
+                            popup: 'rounded-2xl',
+                            confirmButton: 'px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 transition-all duration-300',
+                        },
+                    });
+                    refetch();
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong!',
+                        text: error.message,
+                        customClass: {
+                            popup: 'rounded-2xl',
+                            confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+                        },
+                    });
+                }
+            }
+        });
     };
 
     return (
@@ -54,13 +76,25 @@ const MyReviews = () => {
             </Helmet>
             <div className="my-12 px-4">
                 {/* Header Section */}
-                <h1 className="text-4xl font-extrabold text-center mb-10 text-[#313131] animate-bounce">
+                <motion.h1
+                    className="text-4xl font-extrabold text-center mb-10 text-[#313131]"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
                     My Reviews 📝
-                </h1>
+                </motion.h1>
 
                 {/* Reviews Section */}
                 {review.length === 0 ? (
-                    <p className="text-center text-2xl text-gray-500">You haven't given any reviews yet. 😢</p>
+                    <motion.p
+                        className="text-center text-2xl text-gray-500"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                        You haven't given any reviews yet. 😢
+                    </motion.p>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {review.map((item) => (
@@ -92,12 +126,14 @@ const MyReviews = () => {
                                 <p className="mt-4 text-gray-700">{item?.reviewDescription}</p>
 
                                 {/* Delete Button */}
-                                <button
-                                    onClick={() => handleDelete(review._id)}
+                                <motion.button
+                                    onClick={() => handleDelete(item._id)}
                                     className="mt-6 px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-lg font-semibold hover:from-pink-600 hover:to-rose-600 transition-all duration-300 transform hover:scale-105"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
                                 >
                                     Delete 🗑️
-                                </button>
+                                </motion.button>
                             </motion.div>
                         ))}
                     </div>

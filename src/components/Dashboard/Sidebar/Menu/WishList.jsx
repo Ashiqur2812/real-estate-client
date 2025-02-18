@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import Container from '../../../Shared/Container';
 import LoadingSpinner from '../../../Shared/LoadingSpinner';
-import Button from '../../../Shared/Button/Button';
-import Heading from '../../../Shared/Heading';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import useAuth from '../../../../hooks/useAuth';
 import Swal from 'sweetalert2';
@@ -26,28 +24,50 @@ const WishList = () => {
 
     if (isLoading) return <LoadingSpinner />;
 
-    // const closeModal = () => {
-    //     setIsOpen(false);
-    // };
-    // console.log(wishList);
-
     const handleDelete = async (id) => {
-        try {
-            const { data } = await axiosSecure.delete(`/property/${id}`);
-            Swal.fire({
-                title: "Property deleted successfully!!!",
-                icon: "success",
-                draggable: true
-            });
-            refetch();
-        } catch (error) {
-            // console.log(error.message);
-            Swal.fire({
-                icon: "error",
-                title: "Something went wrong!",
-                draggable: true
-            });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#EF4444',
+            cancelButtonColor: '#6B7280',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true,
+            customClass: {
+                popup: 'rounded-2xl',
+                confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+                cancelButton: 'px-6 py-2 bg-gray-500 hover:bg-gray-600 transition-all duration-300',
+            },
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axiosSecure.delete(`/property/${id}`);
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Your property has been deleted.',
+                        icon: 'success',
+                        confirmButtonColor: '#10B981',
+                        customClass: {
+                            popup: 'rounded-2xl',
+                            confirmButton: 'px-6 py-2 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 transition-all duration-300',
+                        },
+                    });
+                    refetch();
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Something went wrong!',
+                        text: error.message,
+                        customClass: {
+                            popup: 'rounded-2xl',
+                            confirmButton: 'px-6 py-2 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 transition-all duration-300',
+                        },
+                    });
+                }
+            }
+        });
     };
 
     const handleOffer = (id) => {
