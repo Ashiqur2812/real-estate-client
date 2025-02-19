@@ -6,6 +6,7 @@ import WhyChooseUs from '../../components/Home/WhyChooseUs';
 import PropertyCategories from '../../components/Home/PropertyCategories';
 import ClientSuccessStories from '../../components/Home/ClientSuccessStories';
 import MarketTrends from '../../components/Home/MarketTrends';
+import CallToAction from '../../components/Home/CallToAction';
 
 const Home = () => {
   return (
@@ -20,6 +21,7 @@ const Home = () => {
       <ClientSuccessStories />
       <WhyChooseUs />
       <MarketTrends />
+      <CallToAction />
     </div>
   );
 };
