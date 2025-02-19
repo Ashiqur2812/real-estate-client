@@ -3,6 +3,9 @@ import Plants from '../../components/Home/Plants';
 import Banner from '../../components/Home/Banner';
 import VirtualTour from '../../components/Home/VirtualTour';
 import WhyChooseUs from '../../components/Home/WhyChooseUs';
+import PropertyCategories from '../../components/Home/PropertyCategories';
+import ClientSuccessStories from '../../components/Home/ClientSuccessStories';
+import MarketTrends from '../../components/Home/MarketTrends';
 
 const Home = () => {
   return (
@@ -13,7 +16,10 @@ const Home = () => {
       <Banner />
       <Plants />
       <VirtualTour />
+      <PropertyCategories />
+      <ClientSuccessStories />
       <WhyChooseUs />
+      <MarketTrends />
     </div>
   );
 };
